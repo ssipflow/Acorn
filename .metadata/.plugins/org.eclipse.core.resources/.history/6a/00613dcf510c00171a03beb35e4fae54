@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#wrap {
+	position: relative;
+}
+
+#layerPopup {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+	left: 10px;
+	z-index: 999;
+	margin: 0 auto;
+	display: none;
+	height: auto;
+	background-color: #fff;
+	border-radius: 5px;
+	&.
+	open
+	{
+	display
+	:
+	block;
+}
+
+.header {
+	position: relative;
+	height: 50px;
+	line-height: 50px;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+	background-color: #ff0000;
+	border-radius: 5px 5px 0 0; . btn_close_layer { position : absolute;
+	top: 5px;
+	right: 5px;
+	display: block;
+}
+
+}
+.layer-containers {
+	position: absolute;
+	top: 50px;
+	right: 0;
+	bottom: 0;
+	left: 0; . inner { height : 100%;
+	background-color: yellow;
+	border-radius: 0 0 5px 5px;
+}
+
+.box {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 20px 10px;
+	overflow: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+}
+}
+</style>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+	$('.btn_layerpopup').on('click', function(e) {
+		e.preventDefault();
+		var el = $($(this).attr('href'));
+		if (!el.hasClass('open')) {
+			el.addClass('open');
+		} else {
+			el.removeClass('open');
+		}
+	});
+
+	$('.btn_close_layer').on('click', function(e) {
+		$(this).closest('.layer-popup').removeClass('open');
+	});
+</script>
+</head>
+<body>
+	<div id="wrap">
+		<a class="btn_layerpopup" href="#layerPopup">팝업 띄우기</a>
+		<div class="layer-popup" id="layerPopup">
+			<div class="header">
+				<span>제목</span> <a class="btn_close_layer" href="#none">닫기</a>
+			</div>
+			<div class="layer-containers">
+				<div class="inner">
+					<div class="box">
+						test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />test<br />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

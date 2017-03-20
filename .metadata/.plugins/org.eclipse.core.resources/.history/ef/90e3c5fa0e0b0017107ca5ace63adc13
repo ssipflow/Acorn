@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="fileUpload.jsp" method="post" enctype="multipart/form-data">
+		제목: <input type="text" name="title"><br>
+		파일: <input type="file" name="fileName"><br>
+		<input type="submit" value="upload">
+	</form> 
+</body>
+</html>

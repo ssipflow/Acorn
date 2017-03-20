@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<link rel="stylesheet" type="text/css" href="/css/result-light.css">
+<link rel="stylesheet" href="css/html5demos.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="/js/lib/dummy.js"></script>
+<script src="js/h5utils.js"></script>
+<style type="text/css">
+#wrap {
+	position: relative;
+}
+
+#layerPopup {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+	left: 10px;
+	z-index: 999;
+	margin: 0 auto;
+	display: none;
+	height: auto;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+#layerPopup.open {
+	display: block;
+}
+
+#layerPopup .header {
+	position: relative;
+	height: 50px;
+	line-height: 50px;
+	font-weight: bold;
+	text-align: center;
+	color: #000;
+	background-color: #fff;
+	border-radius: 5px 5px 0 0;
+}
+
+#layerPopup .header .btn_close_layer {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	display: block;
+}
+
+#layerPopup .layer-containers {
+	position: absolute;
+	top: 50px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+#layerPopup .layer-containers .inner {
+	height: 100%;
+	background-color: #ffffff;
+	border-radius: 0 0 5px 5px;
+}
+
+#layerPopup .layer-containers .box {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 20px 10px;
+	overflow: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+textarea{
+	display: block;
+	margin: 20px 5px 5px 20px;
+}
+
+input[type=submit]{
+	margin-right: 20px;
+	float: right;
+}
+</style>
+<title>레이어팝업 안에서 스크롤 사용! by Singihae</title>
+<script type='text/javascript'>
+	window.onload = function() {
+		$('.btn_layerpopup').on('click', function(e) {
+			e.preventDefault();
+			var el = $($(this).attr('href'));
+			if (!el.hasClass('open')) {
+				el.addClass('open');
+			} else {
+				el.removeClass('open');
+			}
+		});
+
+		$('.btn_close_layer').on('click', function(e) {
+			$(this).closest('.layer-popup').removeClass('open');
+		});
+	}
+</script>
+</head>
+<body>
+	<div id="wrap">
+		<a class="btn_layerpopup" href="#layerPopup">팝업 띄우기</a>
+		<div class="layer-popup" id="layerPopup">
+			<div class="header">
+				<span>제목</span> <a class="btn_close_layer" href="#none">닫기</a>
+			</div>
+			<div class="layer-containers">
+				<div class="inner">
+					<div class="box">
+						<section id="wrapper">
+							<form action="info.jsp" method="get"
+								enctype="multipart/form-data">
+								<div id="carbonads-container">
+									<div class="carbonad">
+										<div id="azcarbon"></div>
+										<script type="text/javascript">
+											var z = document
+													.createElement("script");
+											z.type = "text/javascript";
+											z.async = true;
+											z.src = "http://engine.carbonads.com/z/14060/azcarbon_2_1_0_VERT";
+											var s = document
+													.getElementsByTagName("script")[0];
+											s.parentNode.insertBefore(z, s);
+										</script>
+									</div>
+								</div>
+								<header>
+									<h1>File API (simple)</h1>
+								</header>
+
+								<article>
+									<p id="status">File API & FileReader API not supported</p>
+									<p>
+										<input type=file>
+									</p>
+									<p>Select an image from your machine to read the contents
+										of the file without using a server</p>
+									<div id="holder"></div>
+								</article>
+								<script>
+									var upload = document
+											.getElementsByTagName('input')[0], holder = document
+											.getElementById('holder'), state = document
+											.getElementById('status');
+
+									if (typeof window.FileReader === 'undefined') {
+										state.className = 'fail';
+									} else {
+										state.className = 'success';
+										state.innerHTML = 'File API & FileReader available';
+									}
+
+									upload.onchange = function(e) {
+										e.preventDefault();
+
+										var file = upload.files[0], reader = new FileReader();
+										reader.onload = function(event) {
+											var img = new Image();
+											img.src = event.target.result;
+											// note: no onload required since we've got the dataurl...I think! :)
+											if (img.width > 560) { // holder width
+												img.width = 560;
+											}
+											holder.innerHTML = '';
+											holder.appendChild(img);
+										};
+										reader.readAsDataURL(file);
+
+										return false;
+									};
+								</script>
+								<textarea id="content" style="width: 550px; height: 90px;"></textarea>
+								<br> <input type="submit" value="글쓰기">
+							</form>
+						</section>
+
+						<script src="js/prettify.packed.js"></script>
+						<script>
+							var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl."
+									: "http://www.");
+							document
+									.write(unescape("%3Cscript src='"
+											+ gaJsHost
+											+ "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+						</script>
+						<script>
+							try {
+								var pageTracker = _gat
+										._getTracker("UA-1656750-18");
+								pageTracker._trackPageview();
+							} catch (err) {
+							}
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

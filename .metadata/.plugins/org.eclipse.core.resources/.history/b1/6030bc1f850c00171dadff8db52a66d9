@@ -1,0 +1,224 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" href="css/popup.css">
+<link rel="stylesheet" href="css/html5demos.css">
+<script src="js/h5utils.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<style type="text/css">
+.wrapper {}
+
+.wrapper div {
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	color: #fff;
+}
+
+.top_bar_fix {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.pd_bar_80 {
+	padding-top: 80px;
+}
+
+.wrapper .top_fix_zone {
+	height: 80px;
+	background: #58D3F7;
+	line-height: 80px;
+}
+
+.wrapper .top_con_zone {
+	height: 1500px;
+	background: #ededed;
+	color: #888;
+	text-align: center;
+	font-size: 70px;
+	padding-top: 50px;
+}
+
+.wrapper .bottom_cp_zone {
+	background: #ededed;
+	color: #888;
+}
+
+.post,.search,.recommended,.user{
+	float: right;
+	margin-right: 5px;
+}
+
+.user{
+	margin-right: 50px;
+}
+</style>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		//상단 고정바 jQuery
+		var topBar = $("#topBar").offset();
+
+		$(window).scroll(function() {
+			var docScrollY = $(document).scrollTop();
+			var barThis = $("#topBar")
+			var fixNext = $("#fixNextTag")
+
+			if (docScrollY > topBar.top) {
+				barThis.addClass("top_bar_fix");
+				fixNext.addClass("pd_top_80");
+			} else {
+				barThis.removeClass("top_bar_fix");
+				fixNext.removeClass("pd_top_80");
+			}
+		});
+
+		$("#fixNextTag").load('http://localhost:8090/LayOut/content/content.jsp').fadeIn();
+		$('#weather').load('http://localhost:8090/LayOut/weather/weather.jsp').fadeIn();
+						
+		$("#toHome").click(function() {
+			$("#fixNextTag").load('http://localhost:8090/LayOut/content/content.jsp').fadeIn();
+		});
+
+		$("#link").click(function() {
+			$("#fixNextTag").load('http://localhost:8090/LayOut/content/other.jsp').fadeIn();
+		});
+	})
+
+	var auto_refresh = setInterval(
+	// 한시간마다 날씨정보 새로고침
+	function() {
+		$('#weather').load('http://localhost:8090/LayOut/weather/weather.jsp')
+				.fadeIn();
+	}, 3600000);
+</script>
+<body>
+	<div class="wrapper">
+		<nav>
+		<div class="top_fix_zone" id="topBar">
+			<span id="weather" class="weather"></span>
+			<span id="toHome" class="user">User</span>
+			<span id="toHome" class="recommended">Recommended</span>
+			<span id="link" class="search">Search</span>
+			<span id="post" class="post">
+				<a class="btn_layerpopup" href="#layerPopup">Post</a>
+			</span> 
+		</div>
+		</nav>
+		<section>
+		<div class="top_con_zone" id="fixNextTag"></div>
+		</section>
+		<footer>
+		<div class="bottom_cp_zone">&copy; copyright 2017 by DevDig</div>
+		</footer>
+	</div>
+
+	<!-- 파일 업로드 API -->
+	<div id="wrap">
+		<div class="layer-popup" id="layerPopup">
+			<div class="header">
+				<span>제목</span> <a class="btn_close_layer" href="#none">닫기</a>
+			</div>
+			<div class="layer-containers">
+				<div class="inner">
+					<div class="box">
+						<section id="wrapper">
+						<form action="info.jsp" method="get" enctype="multipart/form-data">
+							<div id="carbonads-container">
+								<div class="carbonad">
+									<div id="azcarbon"></div>
+									<script type="text/javascript">
+										var z = document
+												.createElement("script");
+										z.type = "text/javascript";
+										z.async = true;
+										z.src = "http://engine.carbonads.com/z/14060/azcarbon_2_1_0_VERT";
+										var s = document
+												.getElementsByTagName("script")[0];
+										s.parentNode.insertBefore(z, s);
+									</script>
+								</div>
+							</div>
+							<header>
+							<h1>File API (simple)</h1>
+							</header>
+
+							<article>
+							<p id="status">File API & FileReader API not supported</p>
+							<p>
+								<input type=file>
+							</p>
+							<p>Select an image from your machine to read the contents of
+								the file without using a server</p>
+							<div id="holder"></div>
+							</article>
+							<script>
+								var upload = document
+										.getElementsByTagName('input')[0], holder = document
+										.getElementById('holder'), state = document
+										.getElementById('status');
+
+								if (typeof window.FileReader === 'undefined') {
+									state.className = 'fail';
+								} else {
+									state.className = 'success';
+									state.innerHTML = 'File API & FileReader available';
+								}
+
+								upload.onchange = function(e) {
+									e.preventDefault();
+
+									var file = upload.files[0], reader = new FileReader();
+									reader.onload = function(event) {
+										var img = new Image();
+										img.src = event.target.result;
+										// note: no onload required since we've got the dataurl...I think! :)
+										if (img.width > 560) { // holder width
+											img.width = 560;
+										}
+										holder.innerHTML = '';
+										holder.appendChild(img);
+									};
+									reader.readAsDataURL(file);
+
+									return false;
+								};
+							</script>
+							<textarea id="content" style="width: 550px; height: 90px;"></textarea>
+							<br> <input type="submit" value="글쓰기">
+						</form>
+						</section>
+
+						<script src="js/prettify.packed.js"></script>
+						<script>
+							var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl."
+									: "http://www.");
+							document
+									.write(unescape("%3Cscript src='"
+											+ gaJsHost
+											+ "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+						</script>
+						<script>
+							try {
+								var pageTracker = _gat
+										._getTracker("UA-1656750-18");
+								pageTracker._trackPageview();
+							} catch (err) {
+							}
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

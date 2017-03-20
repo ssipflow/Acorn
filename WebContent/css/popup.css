@@ -1,0 +1,76 @@
+#wrap {
+	position: relative;
+}
+
+#layerPopup {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+	left: 10px;
+	z-index: 999;
+	margin: 0 auto;
+	display: none;
+	height: auto;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+#layerPopup.open {
+	width: 650px;
+	display: block;
+}
+
+#layerPopup .header {
+	position: relative;
+	height: 50px;
+	line-height: 50px;
+	font-weight: bold;
+	text-align: center;
+	color: black;
+	background-color: #fff;
+	border-radius: 5px 5px 0 0;
+}
+
+#layerPopup .header .btn_close_layer {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	display: block;
+}
+
+#layerPopup .layer-containers {
+	position: absolute;
+	top: 50px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+#layerPopup .layer-containers .inner {
+	height: 100%;
+	background-color: #ffffff;
+	border-radius: 0 0 5px 5px;
+}
+
+#layerPopup .layer-containers .box {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 20px 10px;
+	overflow: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+textarea{
+	display: block;
+	margin: 20px 5px 5px 20px;
+}
+
+input[type=submit]{
+	margin-right: 20px;
+	float: right;
+}

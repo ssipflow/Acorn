@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.acorn.BoardMapper">
+
+	<select id="boardList" resultType="BoardDTO">
+		select num, author, title, to_char(writeday, 'YYYY/MM/DD') writeday, readcnt
+		from board
+		order by num desc
+	</select>
+
+	<insert id="boardWrite" parameterType="BoardDTO">
+		insert into board ( num, title, author, content)
+		values ( board_seq.nextval, #{title}, #{author}, #{content} )
+	</insert>
+	
+	<select id="boardRetrieve" parameterType="int" resultType="BoardDTO">
+		select num, author, title, content, to_char(writeday, 'YYYY/MM/DD') writeday, readcnt
+		from board
+		where num = #{num}
+	</select>
+	
+	<update id="boardReadCnt" parameterType="int">
+		update board
+		set readcnt = readcnt+1
+		where num = #{num}
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+		delete from board
+		where num = #{num}
+	</delete>
+	
+	<update id="boardUpdate" parameterType="hashmap">
+		update board
+		set author = #{b}, title = #{c}, content = #{d}
+		where num =  #{a}
+	</update>
+</mapper>

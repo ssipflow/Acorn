@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<button onClick="getGeolocation()">위치 정보 얻기</button>
+	<div id="target"></div>
+	<script>
+		var myDiv = document.getElementById("target");
+		
+		function getGeolocation(){
+			if(navigator.geolocation){
+				navigator.geolocation.getCurrentPosition(showLocation);
+			}
+		}
+		
+		function showLocation(location){
+			myDiv.innerHTML = "(위도:" + location.coords.latitude + ", 경도: " + location.coords.longitude + ")<br>" + "<a href='http://api.openweathermap.org/data/2.5/weather?lat=" + location.coords.latitude + "&lon=" + location.coords.longitude + "&APPID=923fac2cce4ba3c256062de4b713ac3c'>이동</a>"  
+			
+		}
+	</script>
+</body>
+</html>

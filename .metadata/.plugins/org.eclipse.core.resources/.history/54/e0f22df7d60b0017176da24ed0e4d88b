@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	var count = 1;
+	var auto_refresh=setInterval(
+		function(){
+			console.log(count++);
+			$('#content').load('http://localhost:8090/Weather/NewFile.html').fadeIn("slow");
+		}, 1000);
+</script>
+<body>
+<span id="content"></span>
+</body>
+</html>

@@ -1,0 +1,9 @@
+#Tomcat publish data
+#Mon Mar 20 17:04:16 KST 2017
+org.eclipse.jst.jee.server\:LayerPopup=C\:\\apache-tomcat-8.5.9\\webapps\\LayerPopup
+org.eclipse.jst.jee.server\:FileUpload=C\:\\apache-tomcat-8.5.9\\webapps\\FileUpload
+org.eclipse.jst.jee.server\:LayOut=C\:\\apache-tomcat-8.5.9\\webapps\\LayOut
+org.eclipse.jst.jee.server\:FileAPI=C\:\\apache-tomcat-8.5.9\\webapps\\FileAPI
+org.eclipse.jst.jee.server\:TestProject=C\:\\apache-tomcat-8.5.9\\webapps\\TestProject
+org.eclipse.jst.jee.server\:05Day_Fileupload=C\:\\apache-tomcat-8.5.9\\webapps\\05Day_Fileupload
+org.eclipse.jst.jee.server\:Weather=C\:\\apache-tomcat-8.5.9\\webapps\\Weather

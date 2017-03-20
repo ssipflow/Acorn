@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<span><img src="weatherIcon/sunny.png></span><span> 글</span><span> 쓰</span><span> 기</span>
+</body>
+</html>

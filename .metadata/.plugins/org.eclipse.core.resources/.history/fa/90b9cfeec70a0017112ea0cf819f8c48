@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		$("#searchBy").change(function(){
+			if($("#searchBy").val() == 'Style'){
+				$("#searchFor").html(
+					"<select id='style' name='style'>
+						<option value='Classic'>Classic</option>
+						<option value='Casual'>Casual</option>
+						<option value='Street'>Street</option>
+					</select>"
+				);
+			}
+		});
+	})
+
+</script>
+</head>
+<body>
+	<form>
+		<select id="searchBy" name="searchBy">
+			<option value="style">Style</option>
+			<option value="tag">Tag</option>
+		</select> 
+		<span id="searchFor">
+			<select id="style" name="style">
+				<option value="Classic">Classic</option>
+				<option value="Casual">Casual</option>
+				<option value="Street">Street</option>
+			</select>
+		</span>
+	</form>
+</body>
+</html>
