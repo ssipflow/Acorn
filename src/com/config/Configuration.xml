@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <properties resource="com/config/jdbc.properties" />
     
     <typeAliases>
-     <typeAlias type="com.entity.BoardDTO" alias="BoardDTO"/>
+     <!-- <typeAlias type="com.entity.BoardDTO" alias="BoardDTO"/> -->
     </typeAliases>
     
 	<environments default="development">
@@ -22,6 +22,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/config/BoardMapper.xml" />
+		<mapper resource="com/config/SqlMapper.xml" />
 	</mappers>
 </configuration>

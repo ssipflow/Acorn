@@ -19,7 +19,7 @@
 				<span>비밀번호</span> 
 				<span class="pwd"><input type="password" name="pwd" id="pwd"></span><br>
 				<br>
-				<button class="login_btn">로그인</button><span class="register"><a href="#">회원가입</a>&nbsp;&nbsp;&nbsp;</span>
+				<button class="login_btn">로그인</button><span class="register"><a href="../reg/memberReg.jsp">회원가입</a>&nbsp;&nbsp;&nbsp;</span>
 			</div>
 		</div>
 	</form>

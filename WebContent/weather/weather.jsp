@@ -6,7 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Weather</title>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script>
+<script type="text/javascript">
+
 	$(document).ready(function(){
 		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(function(location){
@@ -21,14 +22,15 @@
 						//$("#city").text("현재위치 : " + data.name);
 						//$("#target").text("현재날씨 : " + data.weather[0].main);
 						//$("#weather").attr('value', data.weather[0].main);
+						console.log(data.name);
 						console.log(data.weather[0].main);
 						$("#icon").html("<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'>");	//아이콘추가
 					}
 				});	
 			},
-			
 			function(error){
 				alert("브라우저의 위치추적을 허용하지 않으셨습니다. 기본좌표로 이동합니다.");
+				console.log(error.code);
 				var lat = 37.555227;
 				var lon = 126.970057;
 				$.ajax({
@@ -37,10 +39,11 @@
 					success:function(data){
 						//json의 경우 data는 파싱 결과
 						
-						//$("#city").text("현재위치 : " + data.name);
+						//$("#city").text("기본위치 : " + data.name);
 						//$("#target").text("현재날씨 : " + data.weather[0].main);
 						//$("#weather").attr('value', data.weather[0].main);
 						console.log(data.weather[0].main);
+						console.log("기본위치 : " + data.name);
 						$("#icon").html("<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'>");	//아이콘추가
 					}
 				});
@@ -51,5 +54,6 @@
 </head>
 <body>
 	<span id="icon" style="float:left; margin-top: 18px; margin-left: 50px; font-size:15px;"></span>
+	<div id="city"></div>
 </body>
 </html>
