@@ -7,7 +7,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <properties resource="com/config/jdbc.properties" />
     
     <typeAliases>
-     <!-- <typeAlias type="com.entity.BoardDTO" alias="BoardDTO"/> -->
+     <typeAlias type="com.entity.UserInfoDTO" alias="UserInfoDTO"/>
+     <typeAlias type="com.entity.UserStyleDTO" alias="UserStyleDTO"/>
+     <typeAlias type="com.entity.PostDTO" alias="PostDTO"/>
     </typeAliases>
     
 	<environments default="development">

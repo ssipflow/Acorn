@@ -33,17 +33,26 @@
 
 .wrapper .top_bn_zone{
 	font: monospace;
-	color: black;
+	color: #F2F2F2;
 	font-size: 40px;
 	height: 100px;
-	background: #00BFFF;
 	line-height: 100px;
+	background: url(images/bnBackground.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	text-shadow: 0 0 5px black;
+	-moz-text-shadow: 0 0 5px black;
+	-webkit-text-shadow: 0 0 5px black;
 }
 
 .wrapper .top_fix_zone {
 	height: 80px;
-	background: #58D3F7;
-	line-height: 80px;
+	background: #DEDEDE;
+	line-height: 80px;text-shadow: 0 0 5px black;
+	-moz-text-shadow: 0 0 5px black;
+	-webkit-text-shadow: 0 0 5px black;
 }
 
 .wrapper .top_con_zone {
@@ -79,6 +88,11 @@
 	border: 1px solid black;
 	z-index: 5;
 }
+
+#holder img{
+	max-width: 100%;
+	width: 550px;
+}
 </style>
 
 <script
@@ -102,7 +116,7 @@
 			}
 		});
 
-		$("#fixNextTag").load('http://localhost:8090/LayOut/content/user.jsp').fadeIn();
+		$("#fixNextTag").load('http://localhost:8090/LayOut/UserPostingServlet').fadeIn();
 		$('#weather').load('http://localhost:8090/LayOut/weather/weather.jsp').fadeIn();
 						
 		$("#user>a").click(function() {
@@ -172,13 +186,13 @@
 	<div id="wrap">
 		<div class="layer-popup" id="layerPopup">
 			<div class="header">
-				<span>Post</span><a class="btn_close_layer" href="#none">닫기</a>
+				<span>New Post</span><a class="btn_close_layer" href="#none">닫기</a>
 			</div>
 			<div class="layer-containers">
 				<div class="inner">
 					<div class="box">
 						<section id="wrapper">
-						<form action="info.jsp" method="get" enctype="multipart/form-data">
+						<form action="UploadServlet" method="post" enctype="multipart/form-data">
 							<div id="carbonads-container">
 								<div class="carbonad">
 									<div id="azcarbon"></div>
@@ -194,17 +208,13 @@
 									</script>
 								</div>
 							</div>
-							<header>
-							<h1>File API (simple)</h1>
-							</header>
 
 							<article>
-							<p id="status">File API & FileReader API not supported</p>
+							<p id="status">당신의 스타일을 공유하세요!</p>
 							<p>
 								<input type=file>
 							</p>
-							<p>Select an image from your machine to read the contents of
-								the file without using a server</p>
+							<p>사진의 크기는 500x500을 권장합니다</p>
 							<div id="holder"></div>
 							</article>
 							<script>
@@ -217,7 +227,7 @@
 									state.className = 'fail';
 								} else {
 									state.className = 'success';
-									state.innerHTML = 'File API & FileReader available';
+									state.innerHTML = '당신의 스타일을 공유하세요!';
 								}
 
 								upload.onchange = function(e) {
@@ -239,7 +249,7 @@
 									return false;
 								};
 							</script>
-							<textarea id="content" style="width: 550px; height: 90px;"></textarea>
+							<textarea name="content" style="width: 550px; height: 90px;"></textarea>
 							<br> <input type="submit" value="글쓰기">
 						</form>
 						</section>

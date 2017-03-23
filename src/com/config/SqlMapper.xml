@@ -9,5 +9,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from userInfo
 		where userid = #{userid}
 	</select>
+	
+	<select id="login" parameterType="hashmap" resultType="UserInfoDTO">
+		select *
+		from userInfo
+		where userid=#{userid} and pwd=#{pwd}
+	</select>
+	
+	<insert id="memberReg" parameterType="UserInfoDTO">
+		insert into userinfo(userid, pwd, gender)
+		values(#{userid}, #{pwd}, #{gender})
+	</insert>
+	
+	<insert id="styleReg" parameterType="UserStyleDTO">
+		insert into userstyle(userid, style) 
+		values(#{userid}, #{style})
+	</insert>
+	
+	<select id="posts" parameterType="string" resultType="PostDTO">
+		select *
+		from post
+		where userid=#{userid}
+	</select>
 
 </mapper>

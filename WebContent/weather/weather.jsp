@@ -25,6 +25,12 @@
 						console.log(data.name);
 						console.log(data.weather[0].main);
 						$("#icon").html("<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'>");	//아이콘추가
+						$.ajax({
+							url:"WeatherPostServlet?weather="+data.weather[0].main,
+							type:"post",
+							datatype:"json",
+							success:function(data){}
+						});
 					}
 				});	
 			},
@@ -45,6 +51,12 @@
 						console.log(data.weather[0].main);
 						console.log("기본위치 : " + data.name);
 						$("#icon").html("<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'>");	//아이콘추가
+						$.ajax({
+							url:"WeatherPostServlet?weather="+data.weather[0].main,
+							type:"post",
+							datatype:"json",
+							success:function(data){}
+						});
 					}
 				});
 			});
@@ -54,6 +66,5 @@
 </head>
 <body>
 	<span id="icon" style="float:left; margin-top: 18px; margin-left: 50px; font-size:15px;"></span>
-	<div id="city"></div>
 </body>
 </html>
