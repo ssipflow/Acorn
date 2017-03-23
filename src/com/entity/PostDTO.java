@@ -4,19 +4,27 @@ public class PostDTO {
 
 	private int idx;
 	private String userid;
+	private String weather;
 	private String style;
 	private String photo;
 	private String content;
 	private String writeday;
+	private int temp;
 	
-	public PostDTO(int idx, String userid, String style, String photo, String content, String writeday) {
+	public PostDTO() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public PostDTO(int idx, String userid, String weather, String style, String photo, String content, String writeday, int temp) {
 		super();
 		this.idx = idx;
 		this.userid = userid;
+		this.weather = weather;
 		this.style = style;
 		this.photo = photo;
 		this.content = content;
 		this.writeday = writeday;
+		this.temp = temp;
 	}
 
 	public int getIdx() {
@@ -29,6 +37,14 @@ public class PostDTO {
 
 	public String getUserid() {
 		return userid;
+	}
+
+	public String getWeather() {
+		return weather;
+	}
+
+	public void setWeather(String weather) {
+		this.weather = weather;
 	}
 
 	public void setUserid(String userid) {
@@ -67,9 +83,17 @@ public class PostDTO {
 		this.writeday = writeday;
 	}
 
+	public int getTemp() {
+		return temp;
+	}
+
+	public void setTemp(int temp) {
+		this.temp = temp;
+	}
+
 	@Override
 	public String toString() {
-		return "PostDTO [idx=" + idx + ", userid=" + userid + ", style=" + style + ", photo=" + photo + ", content="
-				+ content + ", writeday=" + writeday + "]";
+		return "PostDTO [idx=" + idx + ", userid=" + userid + ", weather=" + weather + ", style=" + style + ", photo="
+				+ photo + ", content=" + content + ", writeday=" + writeday + ", temp=" + temp + "]";
 	}
 }

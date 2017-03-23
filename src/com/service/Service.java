@@ -91,6 +91,23 @@ public class Service {
 		return postList;
 	}
 	
+	public void upload(PostDTO postDTO){
+		SqlSession session = MySqlSessionFactory.openSession();
+		
+		System.out.println("recieved post: " + postDTO.toString());
+		
+		try{
+			session.insert(namespace+"upload", postDTO);
+			session.commit();
+			System.out.println("post upload complete");
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+	}
+	
 /*	//1. 목록보기
 	public List<BoardDTO> boardList() {
 		SqlSession session = MySqlSessionFactory.openSession();

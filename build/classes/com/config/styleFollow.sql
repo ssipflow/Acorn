@@ -14,8 +14,6 @@ create table userStyle(
   style varchar2(20),
   constraint userStyle_userid_fk foreign key (userid) references userInfo(userid) on delete cascade);
 
-create sequence post_seq;
-
 create table post(
   idx number(4) not null primary key,
   userid varchar2(10) not null,
@@ -26,8 +24,6 @@ create table post(
   writeday date default sysdate,
   temp num(2) not null,
   constraint post_userid_fk foreign key(userid) references userInfo(userid) on delete cascade);
-  
-create sequence comment_seq;
 
 create table comments(
   cmntidx number(4) not null primary key,
@@ -39,3 +35,6 @@ create table likes(
   idx number(4),
   userid varchar2(10) not null,
   constraint likse_idx_fk foreign key(idx) references post(idx) on delete cascade);
+  
+create sequence post_seq;
+create sequence comment_seq;

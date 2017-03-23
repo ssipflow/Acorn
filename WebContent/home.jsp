@@ -141,11 +141,6 @@
 		});
 	})
 
-	var auto_refresh = setInterval(
-	// 한시간마다 날씨정보 새로고침
-	function() {
-		$('#weather').load('http://localhost:8090/LayOut/weather/weather.jsp').fadeIn();
-	}, 3600000);
 </script>
 <body>
 	<div class="wrapper">
@@ -212,9 +207,16 @@
 							<article>
 							<p id="status">당신의 스타일을 공유하세요!</p>
 							<p>
-								<input type=file>
+								<input type=file name="photo">
 							</p>
-							<p>사진의 크기는 500x500을 권장합니다</p>
+							<p>Style:
+								<select name="style">
+									<option value="casual">캐쥬얼</option>
+									<option value="classic">클래식</option>
+									<option value="street">스트릿</option>
+									<option value="office">오피스</option>
+								</select></p>
+							<p>사진의 크기는 10MB 이하로 올려주세요.</p>
 							<div id="holder"></div>
 							</article>
 							<script>

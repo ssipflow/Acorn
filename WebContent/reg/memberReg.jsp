@@ -62,10 +62,11 @@
 				success:function(data){
 					console.log(data.result);
 					if(data.result == "available"){
-						$("#idAlert").html("사용할수 있는 아이디 입니다.").css("color", "blue");
+						$("#idAlert").css("color", "blue").html("사용할수 있는 아이디 입니다.");
 						idChecked = true;
 						$("form").attr("action","../MemberRegServlet");
 					}else{
+						alert("사용할수 없는 아이디 입니다.");
 						$("#idAlert").html("사용할수 없는 아이디 입니다.").css("color", "red");
 					}
 				}

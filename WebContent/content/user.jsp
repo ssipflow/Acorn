@@ -14,9 +14,14 @@
 </head>
 <body>
 <%
-	if(postList == null)
+	if(postList.size() == 0){
 %>
 <p>등록된 글이 없습니다.</p>
 <p>당신의 스타일을 공유하세요!</p>
+<%}
+	else{
+%>
+<p>등록된 포스트가 있습니다.</p>
+<%} %>
 </body>
 </html>

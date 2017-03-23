@@ -24,9 +24,12 @@
 						//$("#weather").attr('value', data.weather[0].main);
 						console.log(data.name);
 						console.log(data.weather[0].main);
+						var temp = data.main.temp / 100;
+						temp = Math.round(temp);
+						console.log(temp);
 						$("#icon").html("<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'>");	//아이콘추가
 						$.ajax({
-							url:"WeatherPostServlet?weather="+data.weather[0].main,
+							url:"http://localhost:8090/LayOut/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp,
 							type:"post",
 							datatype:"json",
 							success:function(data){}
@@ -50,9 +53,12 @@
 						//$("#weather").attr('value', data.weather[0].main);
 						console.log(data.weather[0].main);
 						console.log("기본위치 : " + data.name);
+						var temp = data.main.temp / 100;
+						temp = Math.round(temp);
+						console.log(temp);
 						$("#icon").html("<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'>");	//아이콘추가
 						$.ajax({
-							url:"WeatherPostServlet?weather="+data.weather[0].main,
+							url:"http://localhost:8090/LayOut/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp,
 							type:"post",
 							datatype:"json",
 							success:function(data){}

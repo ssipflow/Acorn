@@ -25,11 +25,13 @@ public class WeatherPostServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		String weather = request.getParameter("weather");
+		String temp = request.getParameter("temp");
 		System.out.println(weather);
+		System.out.println(temp);
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("weather", weather);
-		
+		session.setAttribute("temp", temp);
 	}
 
 	/**

@@ -37,6 +37,7 @@ public class UserPostingServlet extends HttpServlet {
 		Service service = new Service();
 		List<PostDTO> postList = service.posts(userid);
 		request.setAttribute("postList", postList);
+		System.out.println(postList.size());
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("content/user.jsp");
 		dispatcher.forward(request, response);
