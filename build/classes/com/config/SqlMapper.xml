@@ -94,5 +94,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from post
 		where idx=#{idx} 
 	</select>
+	
+	<delete id="deleteContent" parameterType="int">
+		delete post
+		where idx=#{idx}
+	</delete>
+	
+	<select id="countLikes" parameterType="int" resultType="int">
+		select count(*)
+		from likes
+		where idx=#{idx}
+	</select>
+	
+	<select id="checkLikes" parameterType="hashmap" resultType="int">
+		select count(*)
+		from likes
+		where idx=#{idx} and userid=#{userid}
+	</select>
+	
+	<insert id="uploadLike" parameterType="hashmap">
+		insert into likes(idx, userid)
+		values(#{idx}, #{userid})
+	</insert>
 
 </mapper>

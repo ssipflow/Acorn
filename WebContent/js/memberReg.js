@@ -41,7 +41,7 @@ window.onload = function(){
 	$("#idCheck").click(function(event){
 		event.preventDefault();
 		$.ajax({
-			url: "../IdCheckServlet?userid="+$("#userid").val(),
+			url: "/LayOut/CheckIdServlet?userid="+$("#userid").val(),
 			type: "post",
 			dataType: "json",
 			success:function(data){

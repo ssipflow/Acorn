@@ -1,6 +1,5 @@
 package com.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -253,6 +252,68 @@ public class Service {
 			session.close();
 		}
 		return postDTO;
+	}
+	
+	//글삭제
+	public void deleteContent(int idx){
+		SqlSession session = MySqlSessionFactory.openSession();
+		
+		try {
+			session.delete(namespace+"deleteContent", idx);
+			session.commit();
+		}catch(Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+	}
+	
+	//좋아요 개수 추출
+	public int countLikes(int idx){
+		SqlSession session = MySqlSessionFactory.openSession();
+		int likes = 0;
+		
+		try {
+			likes = session.selectOne(namespace+"countLikes", idx);
+		}catch(Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return likes;
+	}
+	
+	//좋아요 중복 체크
+	public int checkLikes(HashMap<String, Object> map){
+		SqlSession session = MySqlSessionFactory.openSession();
+		int likes = 0;
+		
+		try {
+			likes = session.selectOne(namespace+"checkLikes", map);
+		}catch(Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return likes;
+	}
+	
+	//좋아요 입력
+	public void uploadLike(HashMap<String, Object> map){
+		SqlSession session = MySqlSessionFactory.openSession();
+		
+		try {
+			session.insert(namespace+"uploadLike", map);
+			session.commit();
+		}catch(Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
 	}
 	
 /*	//1. 목록보기

@@ -16,14 +16,16 @@
 					success:function(data){
 						//json의 경우 data는 파싱 결과
 						
-						console.log(data.name);
-						console.log(data.weather[0].main);
-						var temp = data.main.temp / 100;
+						console.log("현재위치: " + data.name);
+						console.log("현재날씨: " + data.weather[0].main);
+						var temp = data.main.temp;	//온도단위 변경
+						temp -= 273.1500;
 						temp = Math.round(temp);
-						console.log(temp);
-						$("#icon").html("<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'>");	//아이콘추가
+						console.log("현재기온: " + temp);
+						$("#weather").html("<figure><img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'><figcaption>현재기온 "+temp+"℃</figcaption></figure>");	//아이콘추가
+						$(".temperature").text("현재기온: " + temp + "℃");
 						$.ajax({
-							url:"http://localhost:8090/LayOut/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp,
+							url:"/LayOut/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp+"&loc="+data.name,
 							type:"post",
 							datatype:"json",
 							success:function(data){}
@@ -41,14 +43,16 @@
 					success:function(data){
 						//json의 경우 data는 파싱 결과
 						
-						console.log(data.weather[0].main);
-						console.log("기본위치 : " + data.name);
-						var temp = data.main.temp / 100;
+						console.log("현재위치: " + data.name);
+						console.log("현재날씨: " + data.weather[0].main);
+						var temp = data.main.temp;	//온도단위 변경
+						temp -= 273.1500;
 						temp = Math.round(temp);
-						console.log(temp);
-						$("#icon").html("<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'>");	//아이콘추가
+						console.log("현재기온: " + temp);
+						$("#weather").html("<figure><img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'><figcaption>현재기온 "+temp+"℃</figcaption></figure>");	//아이콘추가
+						$(".temperature").text("현재기온: " + temp + "℃");
 						$.ajax({
-							url:"http://localhost:8090/LayOut/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp,
+							url:"/LayOut/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp+"&loc="+data.name,
 							type:"post",
 							datatype:"json",
 							success:function(data){}
@@ -61,6 +65,6 @@
 </script>
 </head>
 <body>
-<span id="icon" style="float:left; margin-top: 18px; margin-left: 50px; font-size:15px;"></span>
+<span id="icon"></span>
 </body>
 </html>

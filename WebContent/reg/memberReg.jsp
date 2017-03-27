@@ -10,7 +10,7 @@
 <script src="../js/memberReg.js"></script>
 </head>
 <body>
-	<form action="http://localhost:8090/LayOut/MemberRegServlet" method="post" name="regForm">
+	<form action="/LayOut/MemberRegServlet" method="post" name="regForm">
 		<h1>Style Follow - 회원가입</h1>
 		<fieldset>
 			<legend>로그인 정보</legend>

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<section>
-	<form action="../LoginServlet" method="post" onsubmit="check(event)">
+	<form action="/LayOut/LoginServlet" method="post" onsubmit="check(event)">
 		<div class="login">
 			<div class="login_form">
 				<div class="logo"><strong>Style Follow</strong></div>

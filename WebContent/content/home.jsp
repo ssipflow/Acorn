@@ -14,6 +14,8 @@
 	List<PostDTO> postList = (List<PostDTO>) request.getAttribute("postList");
 	HashMap<Integer, List<CommentsDTO>> commentMap = 
 			(HashMap<Integer, List<CommentsDTO>>) request.getAttribute("commentMap");
+	HashMap<Integer, Integer> likeMap =
+			(HashMap<Integer, Integer>) request.getAttribute("likeMap");
 %>
 <html>
 <head>
@@ -42,6 +44,9 @@
 
 				List<CommentsDTO> commentList = commentMap.get(idx);
 				System.out.println("comment size: " + commentList.size());
+				
+				int likes = likeMap.get(idx);
+				System.out.println("likes: " + likes);
 	%>
 	<div class="postWrapper" id="<%=idx%>">
 		<div class="layer-post" id="layerPost">
@@ -53,10 +58,10 @@
 				<div class="inner-post">
 					<div class="box-post">
 						<div class="image">
-							<img src="<%="http://localhost:8090/LayOut/uploadFiles/" + photo%>">
+							<img src="<%="/LayOut/uploadFiles/" + photo%>">
 						</div>
 						<div class="content">
-							<p class="style" id="<%=idx%>">style:<%=style%></p>
+							<p class="style" id="<%=idx%>">Style: <%=style%></p>
 							<p class="article"><%=content%></p>
 						</div>
 						<%System.out.println("login user: " + loginUserId + ", posting writer: " + userid);
@@ -79,9 +84,9 @@
 							<span class="delete" id="<%=idx%>">삭제</span><!-- 글의 인덱스 -->
 							<span class="modify" id="<%=idx%>">수정</span><!-- 글의 인덱스 -->
 						</div>
-						<%} %>
+						<%	} %>
 						<div class="submenu">
-							<span class="like" id="<%=idx%>">추천하기: x개</span> 
+							<span class="like" id="<%=idx%>">추천: <%= likes %>개</span> 
 							<span class="showComments" id="<%=idx%>">댓글보기</span>
 						</div>
 						<%

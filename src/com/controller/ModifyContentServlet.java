@@ -1,6 +1,8 @@
 package com.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,9 +26,18 @@ public class ModifyContentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		String idx = request.getParameter("idx");
-		String modifiedStyle = request.getParameter("modifiedStyle");
-		String modifiedContent = request.getParameter("modifiedContent");
+		Enumeration<String> parameterClass = request.getParameterNames();
+		//encodeURIComponent 파라미터를 인코딩하고 url에 직접 전달할 때 key-value가 아닌 key만으로 넘어오기 때문에
+		//getParameterNames()로 파라미터 이름에서 직접 value를 추출
+		
+		String[] paramObjects = null;
+		while(parameterClass.hasMoreElements()){
+			paramObjects = parameterClass.nextElement().split("&");
+		}
+		String idx = paramObjects[0].split("=")[1];
+		String modifiedStyle = paramObjects[1].split("=")[1];
+		String modifiedContent = paramObjects[2].split("=")[1];
+		
 		System.out.println("recieved idx: " 
 				+ idx + ", recieved modified style: " 
 				+ modifiedStyle + ", recieved modified content: "

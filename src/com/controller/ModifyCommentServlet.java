@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,8 +25,16 @@ public class ModifyCommentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		String cmntIdx = request.getParameter("cmntIdx");
-		String modifiedComment = request.getParameter("modifiedComment");
+		Enumeration<String> parameterClass = request.getParameterNames();
+		
+		String[] paramObjects = null;
+		while(parameterClass.hasMoreElements()){
+			paramObjects = parameterClass.nextElement().split("&"); 
+		}
+		String cmntIdx = paramObjects[0].split("=")[1];
+		String modifiedComment = paramObjects[1].split("=")[1];
+		/*String cmntIdx = request.getParameter("cmntIdx");
+		String modifiedComment = request.getParameter("modifiedComment");*/
 		System.out.println("recieved cmntIdx: " + cmntIdx + ", recieved modified comment: " + modifiedComment);
 		System.out.println();
 		

@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -31,10 +32,19 @@ public class UploadCommentsServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserInfoDTO userInfoDTO = (UserInfoDTO)session.getAttribute("UserInfo");
 		request.setCharacterEncoding("utf-8");
+		Enumeration<String> parameterClass = request.getParameterNames();
+		
+		String[] paramObjects = null;
+		while(parameterClass.hasMoreElements()){
+			paramObjects = parameterClass.nextElement().split("&");
+		}
+		
 		
 		String userId = userInfoDTO.getUserid();
-		String postIdx = request.getParameter("postIdx");
-		String commented = request.getParameter("commented");
+		String postIdx  = paramObjects[0].split("=")[1];
+		String commented = paramObjects[1].split("=")[1];
+		/*String postIdx = request.getParameter("postIdx");
+		String commented = request.getParameter("commented");*/
 		
 		CommentsDTO commentsDTO = new CommentsDTO();
 		commentsDTO.setUserId(userId);

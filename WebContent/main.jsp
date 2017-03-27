@@ -38,6 +38,7 @@ $(document).ready(function() {
 	/*layout jQuery */
 	var topBar = $("#topBar").offset();
 	
+	//상단고정바
 	$(window).scroll(function() {
 		var docScrollY = $(document).scrollTop();
 		var barThis = $("#topBar")
@@ -60,32 +61,32 @@ $(document).ready(function() {
 	});
 
 	//페이지 로딩에 관련된 jQuery
-	$("#fixNextTag").load('http://localhost:8090/LayOut/HomeServlet').fadeIn();
-	$('#weather').load('http://localhost:8090/LayOut/weather/weather.jsp').fadeIn();
+	$("#fixNextTag").load('/LayOut/HomeServlet').fadeIn();
+	$('#weather').load('/LayOut/weather/weather.jsp').fadeIn();
 						
 	$(document).on("click", "#user", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('http://localhost:8090/LayOut/UserPostingServlet').fadeIn();
+		$("#fixNextTag").load('/LayOut/UserPostingServlet').fadeIn();
 	});
 
 	$(document).on("click", "#recommended", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('http://localhost:8090/LayOut/content/recommended.jsp').fadeIn();
+		$("#fixNextTag").load('/LayOut/content/recommended.jsp').fadeIn();
 	});
 		
 	$(document).on("click", "#search", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('http://localhost:8090/LayOut/content/search.jsp').fadeIn();
+		$("#fixNextTag").load('/LayOut/content/search.jsp').fadeIn();
 	});
 	
 	$(document).on("click", "#home", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('http://localhost:8090/LayOut/HomeServlet').fadeIn();
+		$("#fixNextTag").load('/LayOut/HomeServlet').fadeIn();
 	});
 		
 	$(document).on("click", "#sample", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('http://localhost:8090/LayOut/SampleServlet').fadeIn();
+		$("#fixNextTag").load('/LayOut/SampleServlet').fadeIn();
 	});
 	
 	/*
@@ -144,8 +145,9 @@ $(document).ready(function() {
 	
 			//ajax 전송(postIdx, commented), 작성자 아이디는 웹서버의 세션에서 추가, 저장정보 수신
 			uncleNode = $(this).parent().siblings(".box-comment"); 
+			var params = encodeURIComponent("postIdx="+postIdx+"&commented="+commented);
 			$.ajax({
-				url: "http://localhost:8090/LayOut/UploadCommentsServlet?postIdx="+postIdx+"&commented="+commented,
+				url: "/LayOut/UploadCommentsServlet?"+params,
 				type: "get",
 				dataType: "html",
 				success:function(html){
@@ -203,8 +205,10 @@ $(document).ready(function() {
 			var parentNode = $(this).parent();
 			//ajax로 수정 댓글 전송, 저장된 정보 수신.
 			//$(this).parent().html("수정 댓글 태그");
+			//특수문자를 전송하기 위한 encodeURLComponent()
+			var params = encodeURIComponent("cmntIdx="+cmntIdx+"&modifiedComment="+modifiedComment);
 			$.ajax({
-				url: "http://localhost:8090/LayOut/ModifyCommentServlet?cmntIdx="+cmntIdx+"&modifiedComment="+modifiedComment,
+				url: "/LayOut/ModifyCommentServlet?"+params,
 				type: "get",
 				dataType: "html",
 				success:function(html){
@@ -249,7 +253,7 @@ $(document).ready(function() {
 			//$(this).parent().hide();
 			console.log("삭제");
 			$.ajax({
-				url: "http://localhost:8090/LayOut/DeleteCommentServlet?cmntIdx="+cmntIdx,
+				url: "/LayOut/DeleteCommentServlet?cmntIdx="+cmntIdx,
 				type: "post",
 				dataType: "json",
 				success:function(html){
@@ -325,11 +329,15 @@ $(document).ready(function() {
 		modifiedContent = $(this).parent().siblings(".content-modify").children("textarea").val();
 		console.log(modifiedContent);
 		
+		$(this).parent().prev().hide();
+		
 		var content = $(this).parent().siblings(".content");
+		//특수문자를 전송하기 위한 encodeURLComponent()
+		var params = encodeURIComponent("idx="+idx+"&modifiedStyle="+modifiedStyle+"&modifiedContent="+modifiedContent);
 		$.ajax({
 			//해시태그 전달 시 
 			//if hashtag -> url: &modifiedContent=#시계 -> 공백으로 인식한다.
-			url: "http://localhost:8090/LayOut/ModifyContentServlet?idx="+idx+"&modifiedStyle="+modifiedStyle+"&modifiedContent="+modifiedContent,
+			url: "/LayOut/ModifyContentServlet?"+params,
 			type: "post",
 			dataType: "html",
 			success:function(html){
@@ -338,9 +346,67 @@ $(document).ready(function() {
 			}
 		})
 		content.show();
+		$(this).parent().html(
+				"<span class='delete' id="+idx+">삭제</span>"
+				+ "<span class='modify' id="+idx+">수정</span>"
+		);
 	});
 	
 	//글 삭제
+	$(document).on("click", ".delete", function(){
+		var isOk = confirm("정말 삭제하시겠습니까?");
+		
+		if(isOk){
+			var idx = $(this).attr("id");
+			
+			$.ajax({
+				url: "/LayOut/DeleteContentServlet?idx="+idx,
+				type: "post",
+				dataType: "json",
+				success:function(data){
+
+				}
+			})
+		}
+		
+		$(".postWrapper[id="+idx+"]").hide();
+	});
+	
+	/*
+	 * 좋아요 관련 jQuery 
+	 */
+	$(document).on("click", ".like", function(){
+		var idx = $(this).attr("id");
+		
+		var curPosition = "";
+		curPosition = $(this);
+		$.ajax({
+			//추천 충복여부 확인, userid는 서버에 접속한 session에서 얻는다.
+			url: "/LayOut/CheckLikeServlet?idx="+idx,
+			type: "post",
+			dataType: "json",
+			success:function(data){
+				console.log(data.result);
+				if(data.result == "available"){
+					//alert("추천 가능한 게시물");
+					//likes table에 글 번호, 로그인 사용자 입력
+					//증가된 좋아요 수를 받아 동적으로 화면 변환
+					$.ajax({
+						url: "/LayOut/UploadLikeServlet?idx="+idx,
+						type: "post",
+						dataType: "json",
+						success:function(data){
+							//$(this).text("추천: " + data.result);
+							console.log("like count: " + data.likes);
+							curPosition.text("추천: " + data.likes + "개");
+						}
+					})
+				}else{
+					alert("이미 추천한 게시물 입니다!");
+				}
+			}
+		})
+	});
 })
 </script>
 <body>
@@ -348,8 +414,9 @@ $(document).ready(function() {
 		<div class="top_bn_zone">Style Follow</div>
 		
 		<div class="top_fix_zone" id="topBar">
-			<span class="link">
+			<div class="link">
 				<span id="weather" class="weather"></span>
+				
 				<span class="logout">
 					<a href="LogOutServlet" id="logout">Log out</a>
 				</span>
@@ -371,7 +438,7 @@ $(document).ready(function() {
 				<span class="sample">
 					<a href="#" id="sample">sample</a>
 				</span> 
-			</span>
+			</div>
 		</div>
 		
 		
