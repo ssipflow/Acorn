@@ -41,7 +41,7 @@ window.onload = function(){
 	$("#idCheck").click(function(event){
 		event.preventDefault();
 		$.ajax({
-			url: "/LayOut/CheckIdServlet?userid="+$("#userid").val(),
+			url: "/StyleFollow/CheckIdServlet?userid="+$("#userid").val(),
 			type: "post",
 			dataType: "json",
 			success:function(data){
@@ -49,7 +49,7 @@ window.onload = function(){
 				if(data.result == "available"){
 					$("#idAlert").css("color", "blue").html("사용할수 있는 아이디 입니다.");
 					idChecked = true;
-					$("form").attr("action","../MemberRegServlet");
+					$("form").attr("action","/StyleFollow/MemberRegServlet");
 				}else{
 					alert("사용할수 없는 아이디 입니다.");
 					$("#idAlert").html("사용할수 없는 아이디 입니다.").css("color", "red");

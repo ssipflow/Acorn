@@ -9,7 +9,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		alert("아이디 혹은 비밀번호를 잘못 입력하셨습니다.\n다시 로그인 해주십시오");
-		window.location.href = "../StartServlet";
+		window.location.href = "/StyleFollow/StartServlet";
 	})
 </script>	
 </head>

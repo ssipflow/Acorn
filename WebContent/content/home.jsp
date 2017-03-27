@@ -58,7 +58,7 @@
 				<div class="inner-post">
 					<div class="box-post">
 						<div class="image">
-							<img src="<%="/LayOut/uploadFiles/" + photo%>">
+							<img src="<%="/StyleFollow/uploadFiles/" + photo%>">
 						</div>
 						<div class="content">
 							<p class="style" id="<%=idx%>">Style: <%=style%></p>

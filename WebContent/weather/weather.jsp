@@ -25,7 +25,7 @@
 						$("#weather").html("<figure><img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'><figcaption>현재기온 "+temp+"℃</figcaption></figure>");	//아이콘추가
 						$(".temperature").text("현재기온: " + temp + "℃");
 						$.ajax({
-							url:"/LayOut/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp+"&loc="+data.name,
+							url:"/StyleFollow/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp+"&loc="+data.name,
 							type:"post",
 							datatype:"json",
 							success:function(data){}
@@ -52,7 +52,7 @@
 						$("#weather").html("<figure><img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' border='0' width='40'><figcaption>현재기온 "+temp+"℃</figcaption></figure>");	//아이콘추가
 						$(".temperature").text("현재기온: " + temp + "℃");
 						$.ajax({
-							url:"/LayOut/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp+"&loc="+data.name,
+							url:"/StyleFollow/WeatherPostServlet?weather="+data.weather[0].main+"&temp="+temp+"&loc="+data.name,
 							type:"post",
 							datatype:"json",
 							success:function(data){}

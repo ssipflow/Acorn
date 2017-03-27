@@ -61,32 +61,32 @@ $(document).ready(function() {
 	});
 
 	//페이지 로딩에 관련된 jQuery
-	$("#fixNextTag").load('/LayOut/HomeServlet').fadeIn();
-	$('#weather').load('/LayOut/weather/weather.jsp').fadeIn();
+	$("#fixNextTag").load('/StyleFollow/HomeServlet').fadeIn();
+	$('#weather').load('/StyleFollow/weather/weather.jsp').fadeIn();
 						
 	$(document).on("click", "#user", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('/LayOut/UserPostingServlet').fadeIn();
+		$("#fixNextTag").load('/StyleFollow/UserPostingServlet').fadeIn();
 	});
 
 	$(document).on("click", "#recommended", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('/LayOut/content/recommended.jsp').fadeIn();
+		$("#fixNextTag").load('/StyleFollow/content/recommended.jsp').fadeIn();
 	});
 		
 	$(document).on("click", "#search", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('/LayOut/content/search.jsp').fadeIn();
+		$("#fixNextTag").load('/StyleFollow/content/search.jsp').fadeIn();
 	});
 	
 	$(document).on("click", "#home", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('/LayOut/HomeServlet').fadeIn();
+		$("#fixNextTag").load('/StyleFollow/HomeServlet').fadeIn();
 	});
 		
 	$(document).on("click", "#sample", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('/LayOut/SampleServlet').fadeIn();
+		$("#fixNextTag").load('/StyleFollow/SampleServlet').fadeIn();
 	});
 	
 	/*
@@ -147,7 +147,7 @@ $(document).ready(function() {
 			uncleNode = $(this).parent().siblings(".box-comment"); 
 			var params = encodeURIComponent("postIdx="+postIdx+"&commented="+commented);
 			$.ajax({
-				url: "/LayOut/UploadCommentsServlet?"+params,
+				url: "/StyleFollow/UploadCommentsServlet?"+params,
 				type: "get",
 				dataType: "html",
 				success:function(html){
@@ -208,7 +208,7 @@ $(document).ready(function() {
 			//특수문자를 전송하기 위한 encodeURLComponent()
 			var params = encodeURIComponent("cmntIdx="+cmntIdx+"&modifiedComment="+modifiedComment);
 			$.ajax({
-				url: "/LayOut/ModifyCommentServlet?"+params,
+				url: "/StyleFollow/ModifyCommentServlet?"+params,
 				type: "get",
 				dataType: "html",
 				success:function(html){
@@ -253,7 +253,7 @@ $(document).ready(function() {
 			//$(this).parent().hide();
 			console.log("삭제");
 			$.ajax({
-				url: "/LayOut/DeleteCommentServlet?cmntIdx="+cmntIdx,
+				url: "/StyleFollow/DeleteCommentServlet?cmntIdx="+cmntIdx,
 				type: "post",
 				dataType: "json",
 				success:function(html){
@@ -337,7 +337,7 @@ $(document).ready(function() {
 		$.ajax({
 			//해시태그 전달 시 
 			//if hashtag -> url: &modifiedContent=#시계 -> 공백으로 인식한다.
-			url: "/LayOut/ModifyContentServlet?"+params,
+			url: "/StyleFollow/ModifyContentServlet?"+params,
 			type: "post",
 			dataType: "html",
 			success:function(html){
@@ -360,7 +360,7 @@ $(document).ready(function() {
 			var idx = $(this).attr("id");
 			
 			$.ajax({
-				url: "/LayOut/DeleteContentServlet?idx="+idx,
+				url: "/StyleFollow/DeleteContentServlet?idx="+idx,
 				type: "post",
 				dataType: "json",
 				success:function(data){
@@ -382,7 +382,7 @@ $(document).ready(function() {
 		curPosition = $(this);
 		$.ajax({
 			//추천 충복여부 확인, userid는 서버에 접속한 session에서 얻는다.
-			url: "/LayOut/CheckLikeServlet?idx="+idx,
+			url: "/StyleFollow/CheckLikeServlet?idx="+idx,
 			type: "post",
 			dataType: "json",
 			success:function(data){
@@ -392,7 +392,7 @@ $(document).ready(function() {
 					//likes table에 글 번호, 로그인 사용자 입력
 					//증가된 좋아요 수를 받아 동적으로 화면 변환
 					$.ajax({
-						url: "/LayOut/UploadLikeServlet?idx="+idx,
+						url: "/StyleFollow/UploadLikeServlet?idx="+idx,
 						type: "post",
 						dataType: "json",
 						success:function(data){

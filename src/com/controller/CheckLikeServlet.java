@@ -43,7 +43,7 @@ public class CheckLikeServlet extends HttpServlet {
 		if(likes == 0){
 			result = "available";
 		}else{
-			result = "inUse";
+			result = "alreadyLiked";
 		}
 		System.out.println("like: " + result + "\n");
 		

@@ -6,11 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Style Follow</title>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<link rel="stylesheet" href="../css/memberReg.css">
-<script src="../js/memberReg.js"></script>
+<link rel="stylesheet" href="/StyleFollow/css/memberReg.css">
+<script src="/StyleFollow/js/memberReg.js"></script>
 </head>
 <body>
-	<form action="/LayOut/MemberRegServlet" method="post" name="regForm">
+	<form action="/StyleFollow/MemberRegServlet" method="post" name="regForm">
 		<h1>Style Follow - 회원가입</h1>
 		<fieldset>
 			<legend>로그인 정보</legend>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="LayOut">
+    <wb-module deploy-name="StyleFollow">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="LayOut"/>
-        <property name="java-output-path" value="/LayOut/build/classes"/>
+        <property name="java-output-path" value="/StyleFollow/build/classes"/>
+        <property name="context-root" value="StyleFollow"/>
     </wb-module>
 </project-modules>

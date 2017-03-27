@@ -9,7 +9,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		alert("사진은 10MB 이하로 올려주십시오");
-		window.location.href = "../StartServlet";
+		window.location.href = "/StyleFollow/StartServlet";
 	})
 </script>
 </head>

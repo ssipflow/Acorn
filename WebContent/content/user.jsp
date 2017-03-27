@@ -24,7 +24,7 @@
 %>
 <p>Writer: <%= postDTO.getUserid() %>
 <p>Style: <%= postDTO.getStyle() %></p>
-<p><img src="<%= "http://localhost:8090/LayOut/uploadFiles/"+postDTO.getPhoto() %>"></p>
+<p><img src="<%= "/StyleFollow/uploadFiles/"+postDTO.getPhoto() %>"></p>
 <p>Content:</p>
 <p><%= postDTO.getContent() %></p>
 <%		} 

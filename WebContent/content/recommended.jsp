@@ -415,7 +415,7 @@
 			<div class="layer-post-containers">
 				<div class="inner-post">
 					<div class="box-post">
-						<div class="image"><img src="content/test.jpg"></div>
+						<div class="image"><img src="/StyleFollow/content/test.jpg"></div>
 						<div class="content">
 							<p class="style" id="1">style:xxx</p><!-- 글의 인덱스 -->
 							<p>adsfqewr</p>
@@ -461,7 +461,7 @@
 			<div class="layer-post-containers">
 				<div class="inner-post">
 					<div class="box-post">
-						<div class="image"><img src="content/test.jpg"></div>
+						<div class="image"><img src="/StyleFollow/content/test.jpg"></div>
 						<div class="content">
 							<p class="style" id="2">style:yyy</p><!-- 글의 인덱스 -->
 							<p>adsfqewr</p>
