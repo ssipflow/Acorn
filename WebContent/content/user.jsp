@@ -20,8 +20,15 @@
 <p>당신의 스타일을 공유하세요!</p>
 <%}
 	else{
+		for(PostDTO postDTO: postList){
 %>
-<p>등록된 포스트가 있습니다.</p>
-<%} %>
+<p>Writer: <%= postDTO.getUserid() %>
+<p>Style: <%= postDTO.getStyle() %></p>
+<p><img src="<%= "http://localhost:8090/LayOut/uploadFiles/"+postDTO.getPhoto() %>"></p>
+<p>Content:</p>
+<p><%= postDTO.getContent() %></p>
+<%		} 
+	}
+%>
 </body>
 </html>

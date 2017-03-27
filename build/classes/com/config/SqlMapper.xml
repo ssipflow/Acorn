@@ -29,15 +29,70 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{userid}, #{style})
 	</insert>
 	
-	<select id="posts" parameterType="string" resultType="PostDTO">
-		select *
+	<select id="allPosts" resultType="PostDTO"><!-- 전체 포스팅 -->
+		select idx, userid, weather, style, photo, content, to_char(writeday, 'YYYYMMDDHH24MISS') writeday
+		from post
+		order by writeday desc
+	</select>
+	
+	<select id="posts" parameterType="string" resultType="PostDTO"><!-- 사용자 포스팅 -->
+		select idx, userid, weather, style, photo, content, to_char(writeday, 'YYYYMMDDHH24MISS') writeday
 		from post
 		where userid=#{userid}
+		order by writeday desc
 	</select>
 	
 	<insert id="upload" parameterType="PostDTO">
 		insert into post(idx, userid, weather, style, photo, content, temp)
 		values(post_seq.nextval, #{userid}, #{weather}, #{style}, #{photo}, #{content}, #{temp})
 	</insert>
+	
+	<select id="comments" parameterType="int" resultType="CommentsDTO">
+		select cmntidx, userid, postidx, commented, to_char(writeday, 'YYYYMMDDHH24MISS') writeday
+		from comments
+		where postidx=#{postidx}
+		order by writeday asc
+	</select>
+	
+	<insert id="uploadComment" parameterType="CommentsDTO">
+		insert into comments(cmntidx, userid, postidx, commented)
+		values(comment_seq.nextval, #{userId}, #{postIdx}, #{commented})
+	</insert>
+	
+	<select id="selectPostedComment" parameterType="string" resultType="CommentsDTO">
+		select cmntidx, userid, postidx, commented, to_char(writeday, 'YYYYMMDDHH24MISS') writeday
+		from comments
+		where userid=#{userId}
+		order by writeday desc
+	</select>
+	
+	<update id="modifyComment" parameterType="CommentsDTO">
+		update comments
+		set	commented=#{commented}
+		where cmntidx=#{cmntIdx}
+	</update>
+	
+	<select id="selectModifiedComment" parameterType="int" resultType="CommentsDTO">
+		select cmntIdx, userId, postIdx, commented, writeday
+		from comments
+		where cmntIdx=#{cmntIdx}
+	</select>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete comments
+		where cmntIdx=#{cmntIdx}
+	</delete>
+	
+	<update id="modifyContent" parameterType="PostDTO">
+		update post
+		set style=#{style}, content=#{content}
+		where idx=#{idx}
+	</update>
+	
+	<select id="selectModifiedContent" parameterType="int" resultType="PostDTO">
+		select idx, userid, weather, style, photo, content, to_char(writeday, 'YYYYMMDDHH24MISS') writeday
+		from post
+		where idx=#{idx} 
+	</select>
 
 </mapper>

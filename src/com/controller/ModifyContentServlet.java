@@ -1,45 +1,51 @@
 package com.controller;
 
 import java.io.IOException;
-import java.util.List;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.entity.PostDTO;
-import com.entity.UserInfoDTO;
 import com.service.Service;
 
 /**
- * Servlet implementation class UserServlet
+ * Servlet implementation class ModifyContentServlet
  */
-@WebServlet("/UserPostingServlet")
-public class UserPostingServlet extends HttpServlet {
-
+@WebServlet("/ModifyContentServlet")
+public class ModifyContentServlet extends HttpServlet {
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
+		String idx = request.getParameter("idx");
+		String modifiedStyle = request.getParameter("modifiedStyle");
+		String modifiedContent = request.getParameter("modifiedContent");
+		System.out.println("recieved idx: " 
+				+ idx + ", recieved modified style: " 
+				+ modifiedStyle + ", recieved modified content: "
+				+ modifiedContent);
+		System.out.println();
 		
-		HttpSession session = request.getSession();
-		UserInfoDTO userInfo = (UserInfoDTO)session.getAttribute("UserInfo");
-		String userid = userInfo.getUserid();
+		PostDTO postDTO = new PostDTO();
+		postDTO.setIdx(Integer.parseInt(idx));
+		postDTO.setStyle(modifiedStyle);
+		postDTO.setContent(modifiedContent);
 		
 		Service service = new Service();
-		List<PostDTO> postList = service.posts(userid);
-		request.setAttribute("postList", postList);
-		System.out.println("postSize: " + postList.size());
+		service.modifyContent(postDTO);
+		postDTO = service.selectModifiedContent(Integer.parseInt(idx));
+		System.out.println("modified info: " + postDTO.toString() + "\n");
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("content/user.jsp");
-		dispatcher.forward(request, response);
+		request.setAttribute("postDTO", postDTO);
+		RequestDispatcher dis = request.getRequestDispatcher("ajax/modifyContent.jsp");
+		dis.forward(request, response);
 	}
 
 	/**
@@ -49,4 +55,5 @@ public class UserPostingServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

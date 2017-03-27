@@ -1,6 +1,10 @@
 package com.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -10,10 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import com.entity.PostDTO;
 import com.entity.UserInfoDTO;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.service.Service;
 
 /**
@@ -46,32 +53,78 @@ public class UploadServlet extends HttpServlet {
 		
 		PostDTO postDTO = new PostDTO();
 		
-		//최대 전송 파일 크기 결정 10MB
-		int maxsize = 10*1024*1024;
-		try {
-			//서버에 동일한 파일 이름이 저장되어 있다면, 파일이름 뒤에 숫자를 증가.
-			MultipartRequest multi = new MultipartRequest(request, realFolder, maxsize, "utf-8", new DefaultFileRenamePolicy());
-			
-			//form으로 받은 데이터
-			
-			String style = multi.getParameter("style");
-			String content = multi.getParameter("content");
-			String photo = multi.getFilesystemName("photo");
-			
-			postDTO.setUserid(userid);
-			postDTO.setWeather(weather);
-			postDTO.setStyle(style);
-			postDTO.setPhoto(photo);
-			postDTO.setContent(content);
-			postDTO.setTemp(temp);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
+		//Create a factory for disk-based file items.
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		
+		//Configure a repository (to ensure a secure temp location is used)
+		ServletContext servletContext = this.getServletConfig().getServletContext();
+		File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+		factory.setRepository(repository);
+		
+		//Create a new file upload handler
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		
+		//Parse the request
+		List<FileItem> items = null;
+		try{
+			items = upload.parseRequest(request);
+		}catch(FileUploadException e){
 			e.printStackTrace();
 		}
 		
+		///////////////////////////////////////
+		//최대 전송 파일 크기 결정 10MB
+		int maxSize = 10*1024*1024;
+		
+		HashMap<String, String> formData = new HashMap<>();	//input type이 file이 아닌 데이터를 저장하기 위한 맵
+		String fieldValue = null;
+		String fileName = null;
+		long fileSize = 0;
+		
+		Iterator<FileItem> ite = items.iterator();
+		while(ite.hasNext()){
+			FileItem fileItem = ite.next();
+			
+			if(fileItem.isFormField()){
+				//input의 type이 file이 아닐 때
+				String fieldName = fileItem.getFieldName();	//input의 이름
+				fieldValue = fileItem.getString("utf-8");
+				formData.put(fieldName, fieldValue);
+			}else{
+				//input의 type이 file일 때
+				fileName = fileItem.getName();
+				fileSize = fileItem.getSize();
+				System.out.println(fileName + ", size: " +fileSize);
+				
+				if(fileSize > maxSize)
+					response.sendRedirect("error/uploadError.jsp");
+				
+				File file = new File("c:\\Temp\\styleFollow", fileName);
+				
+				try{
+					fileItem.write(file);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}// end else
+		}//end while
+		/////////////////////////////////////////////////////////////////////////
+		
+		//form으로 받은 데이터
+		String style = formData.get("style");
+		String content = formData.get("content");
+		
+		postDTO.setUserid(userid);
+		postDTO.setWeather(weather);
+		postDTO.setStyle(style);
+		postDTO.setPhoto(fileName);
+		postDTO.setContent(content);
+		postDTO.setTemp(temp);
+		
 		Service service = new Service();
 		service.upload(postDTO);
+		
+		response.sendRedirect("StartServlet");
 	}
 
 	/**

@@ -49,7 +49,7 @@ public class MemberRegServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("UserInfo", userInfoDto);
 		
-		response.sendRedirect("home.jsp");
+		response.sendRedirect("main.jsp");
 	}
 
 	/**

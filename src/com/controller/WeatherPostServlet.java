@@ -26,8 +26,9 @@ public class WeatherPostServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String weather = request.getParameter("weather");
 		String temp = request.getParameter("temp");
-		System.out.println(weather);
-		System.out.println(temp);
+		System.out.println("current weather: " + weather);
+		System.out.println("current temperature: " + temp);
+		System.out.println();
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("weather", weather);

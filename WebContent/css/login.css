@@ -4,13 +4,7 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-}
-
-.login {
-	margin-top: 15%;
-	margin-left: auto;
-	width: 300px;
-	heigth: auto;
+	overflow: hidden;
 }
 
 .login_form {
@@ -38,6 +32,14 @@ body {
 	height: 5%;
 	text-align: center;
 	opacity: 100%;
+}
+
+form{
+	margin-right: 2%;
+	margin-top: 15%;
+	margin-left: auto;
+	width: 300px;
+	heigth: auto;
 }
 
 section {
