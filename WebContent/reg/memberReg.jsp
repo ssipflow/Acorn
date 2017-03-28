@@ -61,7 +61,7 @@
 		</fieldset>
 		<fieldset>
  			 <button class="center" type="submit" > 회원가입 </button> 
-  			<button class="center" type="reset" > 가입취소 </button> 
+  			<button class="center" id="reset" > 가입취소 </button> 
 		</fieldset>
 	</form>
 	<div class="bottom_cp_zone"><strong>&copy; copyright 2017 by DevDig</strong></div>

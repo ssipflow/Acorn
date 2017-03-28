@@ -51,8 +51,8 @@
 	<div class="postWrapper" id="<%=idx%>">
 		<div class="layer-post" id="layerPost">
 			<div class="header-post">
-				<span class="writer" id="<%=userid%>">@ <%=userid%></span> <span
-					class="writeday"><%=writeday%></span>
+				<span class="writer" id="<%=userid%>">@<%=userid%></span> 
+				<span class="writeday"><%=writeday%></span>
 			</div>
 			<div class="layer-post-containers">
 				<div class="inner-post">

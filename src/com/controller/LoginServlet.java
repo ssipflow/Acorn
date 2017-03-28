@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 		
 		if(userInfoDto == null){
 			System.out.println("login fail\n");
-			response.sendRedirect("/StyleFollow/error/loginError.jsp");
+			response.sendRedirect("error/loginError.jsp");
 		}else{
 			HttpSession session = request.getSession();
 			session.setAttribute("UserInfo", userInfoDto);

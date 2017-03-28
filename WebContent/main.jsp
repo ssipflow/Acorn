@@ -67,21 +67,25 @@ $(document).ready(function() {
 	$(document).on("click", "#user", function(e) {
 		e.preventDefault();
 		$("#fixNextTag").load('/StyleFollow/UserPostingServlet').fadeIn();
+		$("body").scrollTop(0);
 	});
 
 	$(document).on("click", "#recommended", function(e) {
 		e.preventDefault();
 		$("#fixNextTag").load('/StyleFollow/content/recommended.jsp').fadeIn();
+		$("body").scrollTop(0);
 	});
 		
 	$(document).on("click", "#search", function(e) {
 		e.preventDefault();
 		$("#fixNextTag").load('/StyleFollow/content/search.jsp').fadeIn();
+		$("body").scrollTop(0);
 	});
 	
 	$(document).on("click", "#home", function(e) {
 		e.preventDefault();
 		$("#fixNextTag").load('/StyleFollow/HomeServlet').fadeIn();
+		$("body").scrollTop(0);
 	});
 		
 	$(document).on("click", "#sample", function(e) {
@@ -406,6 +410,23 @@ $(document).ready(function() {
 				}
 			}
 		})
+	});
+	
+	/* 사용자 페이지로 이동하기 위한 jQuery */
+	//글 작성자
+	$(document).on("click", ".writer", function(){
+		var userid = $(this).attr("id");
+		console.log(userid);
+		$("#fixNextTag").load('/StyleFollow/UserLinkServlet?userid='+userid).fadeIn();
+		$("body").scrollTop(0);
+	});
+	
+	//댓글 작성자
+	$(document).on("click", ".writer-id", function(){
+		var userid = $(this).attr("id");
+		console.log(userid);
+		$("#fixNextTag").load('/StyleFollow/UserLinkServlet?userid='+userid).fadeIn();
+		$("body").scrollTop(0);
 	});
 })
 </script>

@@ -81,6 +81,20 @@ public class Service {
 		return userInfo;
 	}
 	
+	public List<String> selectStyle(String userid){
+		SqlSession session = MySqlSessionFactory.openSession();
+		List<String> styleList = null;
+		
+		try{
+			styleList = session.selectList(namespace+"selectStyle", userid);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return styleList;
+	}
+	
 	//사용자 포스팅
 	public List<PostDTO> posts(String userid){
 		SqlSession session = MySqlSessionFactory.openSession();

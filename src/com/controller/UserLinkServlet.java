@@ -4,25 +4,22 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.entity.CommentsDTO;
 import com.entity.PostDTO;
-import com.entity.UserInfoDTO;
 import com.service.Service;
 
 /**
- * Servlet implementation class UserServlet
+ * Servlet implementation class UserLinkServlet
  */
-@WebServlet("/UserPostingServlet")
-public class UserPostingServlet extends HttpServlet {
+@WebServlet("/UserLinkServlet")
+public class UserLinkServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,10 +27,7 @@ public class UserPostingServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		
-		HttpSession session = request.getSession();
-		UserInfoDTO userInfo = (UserInfoDTO)session.getAttribute("UserInfo");
-		String userid = userInfo.getUserid();
+		String userid = request.getParameter("userid");
 		
 		Service service = new Service();
 		List<PostDTO> postList = service.posts(userid);
@@ -75,4 +69,5 @@ public class UserPostingServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

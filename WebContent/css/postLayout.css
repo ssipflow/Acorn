@@ -4,6 +4,83 @@
 	margin-top: 25px;
 }
 
+.user-post-zone{
+	text-shadow: 0 0 9px black;
+}
+
+#layerUser {
+	border: 1px solid black;
+	position: relative;
+	margin: 0 auto;
+	left: 10px;
+	right: 10px;
+	width: 650px;
+	display: block;
+	border-radius: 5px;
+	text-align: left;
+	background-color: #fff;
+	font-size: 20px;
+}
+
+#layerUser .user-menu{
+	width: 550px;
+	line-height: 50px;
+	margin-top: 20px;
+	margin-left: 50px;
+	margin-right: 50px;
+	font-size: 30px;
+	text-align: left;
+	color: black;
+	border-radius: 5px 5px 0 0;
+}
+
+#layerUser .user-menu .button-member{
+	border-radius: 10px;
+	border: 0;
+	margin-top: 10px;
+	margin-right: 5px;
+	padding: 0;
+	width: auto; 
+	height: 30px;
+	float: right;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+#layerUser .user-info{
+	width: 550px;
+	height: 50px;
+	margin-top: 10px;
+	margin-left: 50px;
+	margin-right: 50px;
+	line-height: 30px;
+	font-size: 18px;
+	text-align: left;
+	color: black;
+	border-radius: 5px 5px 0 0;
+}
+
+#layerUser .user-info .user-style{
+	cursor: pointer;
+}
+
+#layerUser .user-info .search-user-post{
+	font-size: 12px;
+	float: right;
+}
+
+#layerUser .user-info .search-user-post .search-userpost-btn{
+	border-radius: 8px;
+	border: 0;
+	margin-left: 6px;
+	padding: 0;
+	width: 45px; 
+	height: 30px;
+	float: right;
+	font-size: 13px;
+	cursor: pointer;
+}
+
 #layerPost {
 	position: relative;
 	top: 10px;
@@ -12,10 +89,12 @@
 	left: 10px;
 	margin: 0 auto;
 	width: 650px;
+	height: 100%;
 	display: block;
 	background-color: grey;
 	border: 1px solid black;
 	border-radius: 5px;
+	font-size: 40px;
 }
 
 #layerPost .header-post {
@@ -33,6 +112,7 @@
 	position: absolute;
 	top: 5px;
 	left: 50px;
+	cursor: pointer
 }
 
 #layerPost .header-post .writeday {
@@ -251,6 +331,7 @@
 	width: 40px;
 	margin-right: 25px;
 	margin-left: 5px;
+	cursor: pointer
 }
 
 #layerPost .layer-post-containers .box-post .box-comment .comments .list-comment .commentdelete{

@@ -29,6 +29,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{userid}, #{style})
 	</insert>
 	
+	<select id="selectStyle" parameterType="string" resultType="string">
+		select style 
+		from userstyle 
+		where userid=#{userid}
+	</select>
+	
 	<select id="allPosts" resultType="PostDTO"><!-- 전체 포스팅 -->
 		select idx, userid, weather, style, photo, content, to_char(writeday, 'YYYYMMDDHH24MISS') writeday
 		from post

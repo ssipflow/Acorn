@@ -81,4 +81,9 @@ window.onload = function(){
 			}
 		}
 	});
+	
+	$("#reset").click(function(e){
+		e.preventDefault();
+		window.location.assign("/StyleFollow/StartServlet");
+	});
 }
