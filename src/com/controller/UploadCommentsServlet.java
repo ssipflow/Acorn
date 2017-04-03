@@ -15,8 +15,10 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 
 import com.entity.CommentsDTO;
+import com.entity.HashTagDTO;
 import com.entity.UserInfoDTO;
 import com.service.Service;
+import com.util.ExportHashTag;
 
 /**
  * Servlet implementation class UploadCommentsServlet
@@ -49,14 +51,23 @@ public class UploadCommentsServlet extends HttpServlet {
 		CommentsDTO commentsDTO = new CommentsDTO();
 		commentsDTO.setUserId(userId);
 		commentsDTO.setPostIdx(Integer.parseInt(postIdx));
-		commentsDTO.setCommented(commented);
-		
+		commentsDTO.setCommented(commented);		
 		
 		Service service = new Service();
 		service.uploadComment(commentsDTO);
 		List<CommentsDTO> commentList = service.selectPostedComment(userId);
 		commentsDTO = commentList.get(0);
+		int cmntidx = commentsDTO.getCmntIdx();
 		System.out.println("uploaded comment info: " + commentsDTO.toString());
+		
+		List<String> hashTagList = ExportHashTag.exportHashTag(commented);
+		if(hashTagList.size() > 0){
+			for(String tag: hashTagList){
+				System.out.println("hashtag: " + tag);
+				HashTagDTO dto = new HashTagDTO(tag, Integer.parseInt(postIdx), cmntidx);
+				service.insertHashTagByCmnt(dto);
+			}
+		}
 		
 		request.setAttribute("commentsDTO", commentsDTO);
 		RequestDispatcher dis = request.getRequestDispatcher("ajax/uploadComment.jsp");

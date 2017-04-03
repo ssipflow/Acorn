@@ -3,6 +3,7 @@ package com.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.entity.HashTagDTO;
 import com.entity.PostDTO;
 import com.service.Service;
+import com.util.ExportHashTag;
 
 /**
  * Servlet implementation class ModifyContentServlet
@@ -50,6 +53,18 @@ public class ModifyContentServlet extends HttpServlet {
 		postDTO.setContent(modifiedContent);
 		
 		Service service = new Service();
+		service.deleteHashTag(Integer.parseInt(idx));
+		
+		List<String> hashTagList = ExportHashTag.exportHashTag(modifiedContent);
+		if(hashTagList.size() > 0){
+			for(String tag: hashTagList){
+				System.out.println("hashtag: " + tag);
+				HashTagDTO dto = new HashTagDTO();
+				dto.setHashtag(tag);
+				dto.setIdx(Integer.parseInt(idx));
+				service.insertHashTag(dto);
+			}
+		}
 		service.modifyContent(postDTO);
 		postDTO = service.selectModifiedContent(Integer.parseInt(idx));
 		System.out.println("modified info: " + postDTO.toString() + "\n");

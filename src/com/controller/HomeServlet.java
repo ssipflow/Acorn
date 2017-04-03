@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.entity.CommentsDTO;
+import com.entity.CommonPageDTO;
 import com.entity.PostDTO;
 import com.service.Service;
 
@@ -29,8 +30,15 @@ public class HomeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		
+		String curPageNum = request.getParameter("curPageNum");
+		if(curPageNum == null)
+			curPageNum = "1";
+		
 		Service service = new Service();
-		List<PostDTO> postList = service.allPosts();
+		CommonPageDTO commonPageDTO = service.postPage(Integer.parseInt(curPageNum));
+		
+		List<PostDTO> postList = null;
+		postList = commonPageDTO.getList();
 		
 		HashMap<Integer, List<CommentsDTO>> commentMap = new HashMap<>();	//글에 달린 댓글은 mapping 하기 위한 hashmap 
 		HashMap<Integer, Integer> likeMap = new HashMap<>();	//글의 추천수를 mapping하기 위한 hashmap
@@ -52,7 +60,12 @@ public class HomeServlet extends HttpServlet {
 		System.out.println("group of likes: " + likeMap.size());
 		System.out.println();
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("content/home.jsp");
+		RequestDispatcher dispatcher = null;
+		if(curPageNum.equals("1")){
+			dispatcher = request.getRequestDispatcher("content/home.jsp");
+		}else{
+			dispatcher = request.getRequestDispatcher("ajax/append.jsp");
+		}
 		dispatcher.forward(request, response);
 	}
 

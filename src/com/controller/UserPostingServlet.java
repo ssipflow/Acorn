@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.entity.CommentsDTO;
+import com.entity.CommonPageDTO;
 import com.entity.PostDTO;
 import com.entity.UserInfoDTO;
 import com.service.Service;
@@ -35,8 +36,19 @@ public class UserPostingServlet extends HttpServlet {
 		UserInfoDTO userInfo = (UserInfoDTO)session.getAttribute("UserInfo");
 		String userid = userInfo.getUserid();
 		
+		String curPageNum = request.getParameter("curPageNum");
+		if(curPageNum == null)
+			curPageNum = "1";
+		
+		HashMap<String, Object> pagingMap = new HashMap<>();
+		pagingMap.put("userid", userid);
+		pagingMap.put("curPageNum", curPageNum);
+		
 		Service service = new Service();
-		List<PostDTO> postList = service.posts(userid);
+		CommonPageDTO commonPageDTO = service.postsPaging(pagingMap);
+		
+		List<PostDTO> postList = null;
+		postList = commonPageDTO.getList();
 		
 		HashMap<Integer, List<CommentsDTO>> commentMap = new HashMap<>();
 		HashMap<Integer, Integer> likeMap = new HashMap<>();
@@ -64,7 +76,12 @@ public class UserPostingServlet extends HttpServlet {
 		System.out.println("number of user style: " + styleList.size());
 		System.out.println();
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("content/user.jsp");
+		RequestDispatcher dispatcher = null;
+		if(curPageNum.equals("1")){
+			dispatcher = request.getRequestDispatcher("content/user.jsp");
+		}else{
+			dispatcher = request.getRequestDispatcher("ajax/append.jsp");
+		}
 		dispatcher.forward(request, response);
 	}
 

@@ -42,7 +42,7 @@ body{
 }
 
 .wrapper .top_fix_zone {
-	height: 80px;
+	height: auto;
 	background: #DEDEDE;
 	text-shadow: 0 0 5px black;
 	font-size: 20px;
@@ -50,16 +50,63 @@ body{
 	-webkit-text-shadow: 0 0 5px black;
 }
 
+.wrapper .top_fix_zone .link{
+	height: 80px;
+	background: #F3F3F3;
+	text-shadow: 0 0 5px black;
+	font-size: 20px;
+	-moz-text-shadow: 0 0 5px black;
+	-webkit-text-shadow: 0 0 5px black;
+	position: relative;
+}
+
+.wrapper .top_fix_zone .link a{
+	color: #fff;
+	text-decoration: none;
+}
+
+
+.wrapper .top_fix_zone .top_hide_zone {
+	height: 30px;
+	background: #F3F3F3;
+	font-size: 15px;
+	display: none;
+}
+
+#searchFor input[type=text]{
+	padding: 0;
+	border: 1px solid rgb(169, 169, 169);
+	margin: 0;
+	width: 66px;
+	height: 17px;
+}
+
+.wrapper .top_fix_zone .top_hide_zone .search-button{
+	padding: 0;
+	border: 1px;
+	margin: 0;
+	height: 19px;
+	width: 38px;
+	border-radius: 3px;
+	font-size: 10px;
+	background: #A3A3A3;
+	color: #fff;
+	cursor: pointer;
+}
+
 .wrapper .top_con_zone {
 	height: 1500px;
-	background: #ededed;
+	background: #FAFAFA
 	color: #888;
 	text-align: center;
 	font-size: 50px;
 }
 
+.wrapper .top_con_zone .user-post-zone{
+	color:#888;
+}
+
 .wrapper .bottom_cp_zone {
-	background: #ededed;
 	height: 20px;
 	color: #888;
 	bottom: 0;

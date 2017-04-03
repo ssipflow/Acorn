@@ -10,12 +10,21 @@ body {
 .login_form {
 	background-color: white;
 	border-radius: 10px;
-	height: 150px;
+	height: 170px;
 	padding: 10px;
 }
 
-.login_btn, .userid, .pwd, .register {
+.login_btn, .fb-login-button, .userid, .pwd, .register {
 	float: right;
+}
+
+.register{
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.fb-login-button{
+	margin-right: 4px;
 }
 
 .logo {
@@ -34,7 +43,7 @@ body {
 	opacity: 100%;
 }
 
-form{
+.wrapper{
 	margin-right: 2%;
 	margin-top: 15%;
 	margin-left: auto;

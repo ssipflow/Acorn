@@ -1,3 +1,5 @@
+<%@page import="com.util.ExportHashTag"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.entity.UserInfoDTO"%>
 <%@page import="com.entity.CommentsDTO"%>
 <%@page import="java.util.HashMap"%>
@@ -42,11 +44,23 @@
 				writeday = year + "/" + month + "/" + day;
 				int temp = postDTO.getTemp();
 
+				System.out.println("post idx: " + idx);
+				System.out.println("login user: " + loginUserId + ", posting writer: " + userid);
+				
 				List<CommentsDTO> commentList = commentMap.get(idx);
 				System.out.println("comment size: " + commentList.size());
 				
 				int likes = likeMap.get(idx);
 				System.out.println("likes: " + likes);
+				
+				ArrayList<String> contentTags = ExportHashTag.exportHashTag(content);
+				for(String tag: contentTags){
+					String originTag = tag;
+					tag = "<span class='hashtag' id='"+tag+"'>"+tag+"</span>";
+					System.out.println("originTag: " + originTag + ", tag: " + tag);
+					content = content.replace(originTag, tag);
+				}
+				System.out.println("content: " + content);
 	%>
 	<div class="postWrapper" id="<%=idx%>">
 		<div class="layer-post" id="layerPost">
@@ -61,10 +75,10 @@
 							<img src="<%="/StyleFollow/uploadFiles/" + photo%>">
 						</div>
 						<div class="content">
-							<p class="style" id="<%=idx%>">Style: <%=style%></p>
+							<p class="category" id="<%=idx%>">Style: <span class="style"><%=style%></span></p>
 							<p class="article"><%=content%></p>
 						</div>
-						<%System.out.println("login user: " + loginUserId + ", posting writer: " + userid);
+						<%
 							if(loginUserId.equals(userid)){
 						%>
 						<div class="content-modify" id="<%= idx %>">
@@ -104,10 +118,18 @@
 										int cmntIdx = commentsDTO.getCmntIdx();
 										String cmntWriter = commentsDTO.getUserId();
 										String commented = commentsDTO.getCommented();
+										
+										ArrayList<String> commentTags = ExportHashTag.exportHashTag(commented);
+										for(String tag: commentTags){
+											String originTag = tag;
+											tag = "<span class='hashtag' id='"+tag+"'>"+tag+"</span>";
+											System.out.println("origin comment Tag: " + originTag + ", comment tag: " + tag);
+											commented = commented.replace(originTag, tag);
+										}
 						%>
 							
-								<li class="list-comment" id="<%=cmntIdx%>"><span
-									class="writer-id" id="<%=cmntWriter%>"><%=cmntWriter%></span> 
+								<li class="list-comment" id="<%=cmntIdx%>">
+									<span class="writer-id" id="<%=cmntWriter%>"><%=cmntWriter%></span> 
 									<span class="comment" id="<%=cmntIdx%>"><%=commented%></span> 
 								<%
 										if(loginUserId.equals(cmntWriter)){
@@ -116,10 +138,12 @@
 									<span class="commentmodify" id="<%=cmntIdx%>">수정</span>
 									<%	} %>
 								</li>
-						<%			} %>
+							<%		}	%>
 							</ul>
 						</div>
-						<%		} %>
+						<%		} 
+								System.out.println();
+						%>
 						<div class="box-form">
 							<textarea name="comment" class="textarea-comment" id="<%=idx%>"></textarea>
 							<!-- 글의 인덱스 -->

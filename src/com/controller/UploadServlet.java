@@ -2,6 +2,7 @@ package com.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -19,9 +20,11 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.entity.HashTagDTO;
 import com.entity.PostDTO;
 import com.entity.UserInfoDTO;
 import com.service.Service;
+import com.util.ExportHashTag;
 
 /**
  * Servlet implementation class UploadServlet
@@ -123,6 +126,19 @@ public class UploadServlet extends HttpServlet {
 		
 		Service service = new Service();
 		service.upload(postDTO);
+		List<Integer> idxList = service.recentPostIdx(userid);
+		int recentIdx = idxList.get(0);
+		
+		List<String> hashTagList = ExportHashTag.exportHashTag(content);
+		if(hashTagList.size() > 0){
+			for(String tag: hashTagList){
+				System.out.println("hashtag: " + tag);
+				HashTagDTO dto = new HashTagDTO();
+				dto.setHashtag(tag);
+				dto.setIdx(recentIdx);
+				service.insertHashTag(dto);
+			}
+		}
 		
 		response.sendRedirect("StartServlet");
 	}

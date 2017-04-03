@@ -1,3 +1,5 @@
+<%@page import="com.util.ExportHashTag"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.entity.CommentsDTO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.entity.UserInfoDTO"%>
@@ -28,22 +30,60 @@
 			<div class="user-menu">
 				<span>@<%= userid %></span>
 			<% if(loginUserId.equals(userid)){ %>
-				<strong class="button-member" id="<%= userid %>">회원탈퇴</strong>
-				<strong class="button-member" id="<%= userid %>">회원수정</strong>
+				<strong class="button-member-exit" id="<%= userid %>">회원탈퇴</strong>
+				<strong class="button-member-modify" id="<%= userid %>">팔로우 수정&nbsp;</strong>
 			<% } %>
 			</div>
-			<div class="user-info">
-				<span>My Style: </span>
-				<% for(String style: styleList){ %>
-				<span class="user-style"><%= style %></span>
+			<% if(loginUserId.equals(userid)){ %>
+			<div class="member-modify">
+				<% if(styleList.contains("casual")){ %>
+				<input type="checkbox" name="modify-style" value="casual" checked>캐쥬얼
+				<% } else { %>
+				<input type="checkbox" name="modify-style" value="casual">캐쥬얼
 				<% } %>
-				<span class="search-user-post">
+				<% if(styleList.contains("classic")){ %>
+				<input type="checkbox" name="modify-style" value="classic" checked>클래식
+				<% } else { %>
+				<input type="checkbox" name="modify-style" value="classic">클래식
+				<% } %>
+				<% if(styleList.contains("street")){ %>
+				<input type="checkbox" name="modify-style" value="street" checked>스트릿
+				<% } else { %>
+				<input type="checkbox" name="modify-style" value="street" >스트릿
+				<% } %>
+				<% if(styleList.contains("office")){ %>
+				<input type="checkbox" name="modify-style" value="office" checked>오피스
+				<% } else { %>
+				<input type="checkbox" name="modify-style" value="office">오피스
+				<% } %>
+				<button class="button-member-modify-ok" id="<%= userid %>">수정</button>
+				<button class="button-member-modify-cancel" id="<%= userid %>">취소</button>
+			</div>
+			<% } %>
+			<% if(loginUserId.equals(userid)){ %>
+			<div class="member-exit">
+				<input type="pwd"><br>
+				<input type="pwd">  
+			</div>
+			<% } %>
+			<div class="user-info" id="<%= userid %>">
+				<% if(loginUserId.equals(userid)){ %>
+				<span>My Style: </span>
+				<% }else{ %>
+				<span><%= userid %>'s style: </span>
+				<% } %>
+				<span class="style-box">
+					<% for(String style: styleList){ %>
+					<span class="user-style"><%= style %></span>
+					<% } %>
+				</span>
+				<span class="search-user-post" id="<%= userid %>">
 				<% if(loginUserId.equals(userid)){ %>
 					나의 게시글 검색
 				<% } else{ %>
 					@<%= userid %>의 게시글 검색
 				<% } %>
-					<input type="text" name="searchfor" size="4" value="#">
+					<input type="text" name="searchfor" size="4" placeholder="#">
 					<button class="search-userpost-btn">검색</button>
 				</span>
 			</div>
@@ -76,11 +116,23 @@
 				writeday = year + "/" + month + "/" + day;
 				int temp = postDTO.getTemp();
 
+				System.out.println("post idx: " + idx);
+				System.out.println("login user: " + loginUserId + ", posting writer: " + userid);
+				
 				List<CommentsDTO> commentList = commentMap.get(idx);
 				System.out.println("comment size: " + commentList.size());
 				
 				int likes = likeMap.get(idx);
 				System.out.println("likes: " + likes);
+				
+				ArrayList<String> contentTags = ExportHashTag.exportHashTag(content);
+				for(String tag: contentTags){
+					String originTag = tag;
+					tag = "<span class='hashtag' id='"+tag+"'>"+tag+"</span>";
+					System.out.println("originTag: " + originTag + ", tag: " + tag);
+					content = content.replace(originTag, tag);
+				}
+				System.out.println("content: " + content);
 	%>
 	<div class="postWrapper" id="<%=idx%>">
 		<div class="layer-post" id="layerPost">
@@ -95,10 +147,10 @@
 							<img src="<%="/StyleFollow/uploadFiles/" + photo%>">
 						</div>
 						<div class="content">
-							<p class="style" id="<%=idx%>">Style: <%=style%></p>
+							<p class="category" id="<%=idx%>">Style: <span class="style"><%=style%></span></p>
 							<p class="article"><%=content%></p>
 						</div>
-						<%System.out.println("login user: " + loginUserId + ", posting writer: " + userid);
+						<%
 							if(loginUserId.equals(userid)){
 						%>
 						<div class="content-modify" id="<%= idx %>">
@@ -138,6 +190,14 @@
 										int cmntIdx = commentsDTO.getCmntIdx();
 										String cmntWriter = commentsDTO.getUserId();
 										String commented = commentsDTO.getCommented();
+										
+										ArrayList<String> commentTags = ExportHashTag.exportHashTag(commented);
+										for(String tag: commentTags){
+											String originTag = tag;
+											tag = "<span class='hashtag' id='"+tag+"'>"+tag+"</span>";
+											System.out.println("origin comment Tag: " + originTag + ", comment tag: " + tag);
+											commented = commented.replace(originTag, tag);
+										}
 						%>
 							
 								<li class="list-comment" id="<%=cmntIdx%>"><span
@@ -153,7 +213,10 @@
 						<%			} %>
 							</ul>
 						</div>
-						<%		} %>
+						<%
+								}
+								System.out.println();
+						%>
 						<div class="box-form">
 							<textarea name="comment" class="textarea-comment" id="<%=idx%>"></textarea>
 							<!-- 글의 인덱스 -->

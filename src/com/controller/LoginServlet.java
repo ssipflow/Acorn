@@ -26,27 +26,35 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
+		String fbKey = request.getParameter("fbKey");
 		String userid = request.getParameter("userid");
 		String pwd = request.getParameter("pwd");
+		System.out.println("FB Key: " + fbKey);
 		System.out.println("Login id: " + userid);
-		System.out.println("Password: " + pwd);
 		System.out.println();
 		
-		HashMap<String, String> map = new HashMap<>();
-		map.put("userid", userid);
-		map.put("pwd", pwd);
-		
 		Service service = new Service();
-		UserInfoDTO userInfoDto = service.login(map);
-		
-		if(userInfoDto == null){
-			System.out.println("login fail\n");
-			response.sendRedirect("error/loginError.jsp");
+		UserInfoDTO userInfoDto = null;
+		if(fbKey == null){
+			HashMap<String, String> map = new HashMap<>();
+			map.put("userid", userid);
+			map.put("pwd", pwd);
+			
+			
+			userInfoDto = service.login(map);
+			
+			if(userInfoDto == null){
+				System.out.println("login fail\n");
+				response.sendRedirect("error/loginError.jsp");
+			}
 		}else{
-			HttpSession session = request.getSession();
-			session.setAttribute("UserInfo", userInfoDto);
-			response.sendRedirect("main.jsp");
+			userInfoDto = service.fbLogin(fbKey);
 		}
+		
+		System.out.println(userInfoDto.toString());
+		HttpSession session = request.getSession();
+		session.setAttribute("UserInfo", userInfoDto);
+		response.sendRedirect("main.jsp");
 	}
 
 	/**

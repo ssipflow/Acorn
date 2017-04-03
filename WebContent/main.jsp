@@ -22,6 +22,11 @@ $(document).ready(function() {
 	/* popup창(글쓰기) jQuery */
 	$('.btn_layerpopup').on('click', function(e) {
 		e.preventDefault();
+		var state = $("#topSearchBar").css("display");
+
+		if(state == "block")
+			$("#topSearchBar").hide();
+		
 		console.log('Pop up');
 		var el = $($(this).attr('href'));
 		if (!el.hasClass('open')) {
@@ -38,7 +43,16 @@ $(document).ready(function() {
 	/*layout jQuery */
 	var topBar = $("#topBar").offset();
 	
-	//상단고정바
+	//상단고정바, 스크롤 이벤트
+	//다음 변수는 페이징 처리를 위한 구분자 및 파라미터 변수
+	var curPage = "home";
+	var curPageNum = 1;
+	var gender = "";
+	var searchBy = "";
+	var searchFor = "";
+	var tag = "";
+	var style = "";
+	var userid = "";
 	$(window).scroll(function() {
 		var docScrollY = $(document).scrollTop();
 		var barThis = $("#topBar")
@@ -55,7 +69,117 @@ $(document).ready(function() {
 		$("#bottomBar").css("display", "none");
 		
 		if($(window).scrollTop() == $(document).height()-$(window).height()){
+			console.log("curPage: " + curPage + ", curPageNum: " + curPageNum);
+			
 			console.log("끝");
+			
+			
+			//다음 분기문은 스크롤 로딩을 위한 코드
+			if(curPage == "home"){
+				//home 메뉴 스크롤 로딩
+				curPageNum += 1;
+				
+				$.ajax({
+					url: "/StyleFollow/HomeServlet?curPageNum="+curPageNum,
+					type: "get",
+					dataType: "html",
+					success:function(html){					
+						var recievedHTML = $.parseHTML(html);
+						$("#fixNextTag").append(recievedHTML);
+					}
+				})
+			} else if(curPage == "user"){
+				//user 메뉴 스크롤 로딩
+				curPageNum += 1;
+				
+				$.ajax({
+					url: "/StyleFollow/UserPostingServlet?curPageNum="+curPageNum,
+					type: "get",
+					dataType: "html",
+					success:function(html){					
+						var recievedHTML = $.parseHTML(html);
+						$(".user-post-zone").append(recievedHTML);
+					}
+				})
+			} else if(curPage == "recommended"){
+				//recommended 메뉴 스크롤 로딩
+				curPageNum += 1;
+				
+				$.ajax({
+					url: "/StyleFollow/RecommendServlet?curPageNum="+curPageNum,
+					type: "get",
+					dataType: "html",
+					success:function(html){					
+						var recievedHTML = $.parseHTML(html);
+						$(".user-post-zone").append(recievedHTML);
+					}
+				})
+			} else if(curPage == "search"){
+				//검색결과 스크롤 로딩
+				curPageNum += 1;
+				
+				$.ajax({
+					url: "/StyleFollow/SearchServlet?gender="+gender+"&searchBy="+searchBy+"&searchFor="+searchFor+"&curPageNum="+curPageNum,
+					type: "get",
+					dataType: "html",
+					success:function(html){					
+						var recievedHTML = $.parseHTML(html);
+						$(".user-post-zone").append(recievedHTML);
+					}
+				})
+			} else if(curPage == "searchByClickHashTag"){
+				//해시태그 클릭 결과 스크롤 로딩
+				curPageNum += 1;
+				
+				$.ajax({
+					url: "/StyleFollow/SearchByClickServlet?searchBy=hashtag&searchFor="+tag+"&curPageNum="+curPageNum,
+					type: "get",
+					dataType: "html",
+					success:function(html){					
+						var recievedHTML = $.parseHTML(html);
+						$(".user-post-zone").append(recievedHTML);
+					}
+				})
+			} else if(curPage == "searchByClickStyle"){
+				//스타일 클릭 결과 스크롤 로딩
+				curPageNum += 1;
+				
+				$.ajax({
+					url: "/StyleFollow/SearchByClickServlet?searchBy=style&searchFor="+style+"&curPageNum="+curPageNum,
+					type: "get",
+					dataType: "html",
+					success:function(html){					
+						var recievedHTML = $.parseHTML(html);
+						$(".user-post-zone").append(recievedHTML);
+					}
+				})
+			} else if(curPage == "searchForUserPostingbyHashTag"){
+				//사용자 페이지 해시태그 검색 결과 스크롤 로딩
+				curPageNum += 1;
+				
+				$.ajax({
+					url: "/StyleFollow/SearchForUserPostingServlet?searchBy=hashtag&searchFor="+searchFor+"&userid="+userid+"&curPageNum="+curPageNum,
+					type: "get",
+					datatype: "html",
+					success: function(html){
+						var recievedHTML = $.parseHTML(html);
+						$(".user-post-zone").append(recievedHTML);
+					}
+				})
+			} else if(curPage == "searchForUserPostingbyStyle"){
+				//사용자 페이지 스타일 검색 결과 스크롤 로딩
+				curPageNum += 1;
+				
+				$.ajax({
+					url: "/StyleFollow/SearchForUserPostingServlet?searchBy=style&searchFor="+searchFor+"&userid="+userid+"&curPageNum="+curPageNum,
+					type: "get",
+					datatype: "html",
+					success: function(html){
+						var recievedHTML = $.parseHTML(html);
+						$(".user-post-zone").append(recievedHTML);
+					}
+				})
+			}
 			$("#bottomBar").css("display", "block");
 		}
 	});
@@ -66,31 +190,219 @@ $(document).ready(function() {
 						
 	$(document).on("click", "#user", function(e) {
 		e.preventDefault();
-		$("#fixNextTag").load('/StyleFollow/UserPostingServlet').fadeIn();
-		$("body").scrollTop(0);
-	});
-
-	$(document).on("click", "#recommended", function(e) {
-		e.preventDefault();
-		$("#fixNextTag").load('/StyleFollow/content/recommended.jsp').fadeIn();
-		$("body").scrollTop(0);
-	});
 		
-	$(document).on("click", "#search", function(e) {
-		e.preventDefault();
-		$("#fixNextTag").load('/StyleFollow/content/search.jsp').fadeIn();
+		curPage = "user";
+		curPageNum = 1;
+		
+		var state = $("#topSearchBar").css("display");
+
+		if(state == "block")
+			$("#topSearchBar").hide();
+		
+		$("#fixNextTag").load('/StyleFollow/UserPostingServlet').fadeIn();
 		$("body").scrollTop(0);
 	});
 	
 	$(document).on("click", "#home", function(e) {
 		e.preventDefault();
+		
+		curPage = "home";
+		curPageNum = 1;
+		
+		var state = $("#topSearchBar").css("display");
+
+		if(state == "block")
+			$("#topSearchBar").hide();
+		
 		$("#fixNextTag").load('/StyleFollow/HomeServlet').fadeIn();
 		$("body").scrollTop(0);
 	});
-		
-	$(document).on("click", "#sample", function(e) {
+	
+	/* facebook api sdk */
+	function statusChangeCallback(response) {
+		console.log('statusChangeCallback');
+		console.log(response);
+	}
+	
+	function checkLoginState() {
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	}
+	
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId : '613531818852008',
+			cookie : true, 
+			xfbml : true,
+			version : 'v2.8'
+		});
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	};
+	
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.8&appId=613531818852008";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	
+	//로그아웃
+	$(document).on("click", "#logout", function(e){
 		e.preventDefault();
-		$("#fixNextTag").load('/StyleFollow/SampleServlet').fadeIn();
+		
+		//facebook 로그인 했을 떄
+		FB.logout(function(response){
+			window.location.assign("/StyleFollow/LogOutServlet");
+		});
+		
+		//일반 로그인을 했을 때
+		//facebook access token 이 없음을 확인할때까지 1.5초 대기 후 로그아웃 실행
+		setTimeout(function(){
+			window.location.assign("/StyleFollow/LogOutServlet");
+		}, 1500);
+	});
+
+	//추천게시물
+	$(document).on("click", "#recommended", function(e) {
+		e.preventDefault();
+		
+		curPage = "recommended";
+		curPageNum = 1;
+		
+		var state = $("#topSearchBar").css("display");
+
+		if(state == "block")
+			$("#topSearchBar").hide();
+		
+		$.ajax({
+			url: "/StyleFollow/RecommendServlet",
+			type: "get",
+			dataType: "html",
+			success:function(html){					
+				var recievedHTML = $.parseHTML(html);
+				$("#fixNextTag").html(recievedHTML);
+			}
+		})
+		$("body").scrollTop(0);
+	});
+	
+	/* 검색창 관련 jQuery */
+	//검색창 보이기
+	$(document).on("click", "#search", function(e) {
+		e.preventDefault();
+		
+		var state = $("#topSearchBar").css("display");
+
+		if(state == "block")
+			$("#topSearchBar").hide();
+		else
+			$("#topSearchBar").show();
+	});
+	
+	//검색창이 열려있을때 검색창 닫기
+	$(document).on("mousedown", ".top_con_zone", function(){
+		var state = $("#topSearchBar").css("display");
+
+		if(state == "block")
+			$("#topSearchBar").hide();
+	});
+	
+	//Style - HashTag 선택시 검색창 변경
+	$(document).on("change", "#searchBy", function(){
+		var searchBy = $("#searchBy").val();
+		
+		if(searchBy == 'style'){
+			$("#searchFor").html(
+					"<select id='style' name='style'>"
+					+ "<option value='classic'>Classic</option>"
+					+ "<option value='casual'>Casual</option>"
+					+ "<option value='street'>Street</option>"
+					+ "<option value='office'>Office</option>"
+					+ "</select>"
+			);
+		} else if(searchBy == 'hashtag'){
+			$("#searchFor").html(
+				"<input type='text' name='hashtag' placeholder='#' size='5'>"
+			);
+		}
+	});
+	
+	//검색버튼 클릭
+	$(document).on("click", ".search-button", function(){
+		curPage = "search";
+		curPageNum = 1;
+		gender = "";
+		searchBy = "";
+		searchFor = "";
+		
+		gender = $(this).siblings("input[type=radio]:checked").val();
+		searchBy = $(this).siblings("#searchBy").val();
+		
+		if(searchBy == 'hashtag'){
+			//text 읽어오기
+			searchFor = $(this).siblings().children("input").val();
+		} else{
+			searchFor = $(this).siblings().children("select").val();
+		}
+		console.log(searchBy);
+		$.ajax({
+			url: "/StyleFollow/SearchServlet?gender="+gender+"&searchBy="+searchBy+"&searchFor="+searchFor,
+			type: "get",
+			dataType: "html",
+			success:function(html){					
+				var recievedHTML = $.parseHTML(html);
+				$("#fixNextTag").html(recievedHTML);
+			}
+		})
+		$("body").scrollTop(0);
+	});
+	
+	
+	// 해시태그 클릭 검색을 위한 jQuery
+	$(document).on("click", ".hashtag", function(){
+		curPage = "searchByClickHashTag";
+		curPageNum = 1;
+
+		tag = $(this).attr("id");
+		tag = tag.substring(1);
+		
+		console.log(tag);
+		
+		$.ajax({
+			url: "/StyleFollow/SearchByClickServlet?searchBy=hashtag&searchFor="+tag,
+			type: "get",
+			datatype: "html",
+			success: function(html){
+				var recievedHTML = $.parseHTML(html);
+				$("#fixNextTag").html(recievedHTML);
+			}
+		})
+		$("body").scrollTop(0);
+	});
+	
+	// 스타일 클릭 검색을 위한 jQuery
+	$(document).on("click", ".style", function(){
+		curPage = "searchByClickStyle";
+		curPageNum = 1;
+		
+		style = $(this).text();
+		
+		console.log(style);
+		
+		$.ajax({
+			url: "/StyleFollow/SearchByClickServlet?searchBy=style&searchFor="+style,
+			type: "get",
+			datatype: "html",
+			success: function(html){
+				var recievedHTML = $.parseHTML(html);
+				$("#fixNextTag").html(recievedHTML);
+			}
+		})
+		$("body").scrollTop(0);
 	});
 	
 	/*
@@ -103,7 +415,7 @@ $(document).ready(function() {
 		console.log(postIdx);
 		
 		var state = $(this).parent().siblings(".box-comment").css("display");
-		console.log(state);
+		
 		//var state = $(".box-comment").css("display");
 		if(state == "none"){
 			//댓글 보이기
@@ -179,7 +491,7 @@ $(document).ready(function() {
 		cmntIdx = $(this).attr("id");
 		console.log("댓글인덱스: " + cmntIdx);
 		
-		originComment = $(this).siblings(".comment").text();
+		originComment = $(this).siblings(".comment").html();
 		console.log("기존 댓글: " + originComment);
 		
 
@@ -233,11 +545,12 @@ $(document).ready(function() {
 		console.log(isOk);
 		if(isOk){
 			$(this).parent().html(
-					"<span class='writer-id' id="+writerID+">" + writerID 
-					+ "</span><span class='comment' id="+cmntIdx+">" + originComment 
-					+ "</span><span class='commentdelete' id="+cmntIdx+">삭제</span>"
+					"<span class='writer-id' id="+writerID+">"+writerID+"</span>" 
+					+ "<span class='comment' id="+cmntIdx+">"+originComment+"</span>" 
+					+ "<span class='commentdelete' id="+cmntIdx+">삭제</span>"
 					+ "<span class='commentmodify' id="+cmntIdx+">수정</span>"		
 			);
+			$(this).siblings(".comment").children(".hashtag").css("color", "blue").css("cursor", "pointer");
 		}
 	});
 	
@@ -428,6 +741,115 @@ $(document).ready(function() {
 		$("#fixNextTag").load('/StyleFollow/UserLinkServlet?userid='+userid).fadeIn();
 		$("body").scrollTop(0);
 	});
+	
+	/* 사용자 페이지의 검색 jQuery */
+	//스타일 검색
+	$(document).on("click", ".user-style", function(){
+		curPage = "searchForUserPostingbyStyle";
+		curPageNum = 1;
+		
+		userid = $(this).parent().attr("id");
+		searchFor = $(this).text();
+		console.log(userid + " : " + searchFor);
+		
+		$.ajax({
+			url: "/StyleFollow/SearchForUserPostingServlet?searchBy=style&searchFor="+searchFor+"&userid="+userid,
+			type: "get",
+			datatype: "html",
+			success: function(html){
+				var recievedHTML = $.parseHTML(html);
+				$("#fixNextTag").html(recievedHTML);
+			}
+		})
+		$("body").scrollTop(0);
+	});
+	
+	//해시태그 검색
+	$(document).on("click", ".search-userpost-btn", function(){
+		curPage = "searchForUserPostingbyHashTag";
+		curPageNum = 1;
+		
+		userid = $(this).parent().attr("id");
+		searchFor = $(this).prev().val();
+		console.log(userid + " : " + searchFor);
+		
+		$.ajax({
+			url: "/StyleFollow/SearchForUserPostingServlet?searchBy=hashtag&searchFor="+searchFor+"&userid="+userid,
+			type: "get",
+			datatype: "html",
+			success: function(html){
+				var recievedHTML = $.parseHTML(html);
+				$("#fixNextTag").html(recievedHTML);
+			}
+		})
+		$("body").scrollTop(0);
+	});
+	
+	/*
+	 * 사용자 메뉴(탈퇴/수정) 관련 jQuery
+	 */
+	//팔로우 수정 화면 보이기
+	$(document).on("click", ".button-member-modify", function(){
+		$(".member-modify").show();
+	});
+	
+	//팔로우 수정 취소
+	$(document).on("click", ".button-member-modify-cancel", function(){
+		$(".member-modify").hide();
+	});
+	
+	//팔로우 수정
+	$(document).on("click", ".button-member-modify-ok", function(){
+		var userid = $(this).attr("id");
+		
+		var checked = new Array();
+		$(this).siblings(":checkbox[name='modify-style']").each(function(){
+			if($(this).is(":checked"))
+				checked.push($(this).val());
+		});
+		
+		var params = "";
+		for(var i = 0; i < checked.length; i++)
+			params += ("0"+checked[i]);
+		
+		$.ajax({
+			url: "/StyleFollow/ModifyMemberStyleServlet?userid="+userid+"&params="+params,
+			type: "get",
+			datatype: "html",
+			success: function(html){
+				var recievedHTML = $.parseHTML(html);
+				$(".style-box").html(recievedHTML);
+			}
+		})
+		
+		$(".member-modify").hide();
+	});
+	
+	/*
+	 * 업로드 유효성 검사
+	 * 내용, 이미지 유효성 확인
+	 */
+	$(document).on("submit", "#uploadForm", function(e){
+		var uploadArticle = "";
+		uploadArticle = $("#uploadArtice").val();
+		
+		if(uploadArticle == ""){
+			e.preventDefault();
+			alert("내용을 입력하세요.");
+		}else{
+			if($("#file").val() != ""){
+				var ext = $("#file").val().split(".").pop().toLowerCase();
+				
+				if($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1){
+					e.preventDefault();
+					alert("이미지파일만 업로드 할수 있습니다.");
+				}
+			}else{
+				e.preventDefault();
+				alert("이미지 파일을 포함시켜야 합니다.");
+			}
+		}
+	});
 })
 </script>
 <body>
@@ -439,7 +861,7 @@ $(document).ready(function() {
 				<span id="weather" class="weather"></span>
 				
 				<span class="logout">
-					<a href="LogOutServlet" id="logout">Log out</a>
+					<a href="#" id="logout">Log out</a>
 				</span>
 				<span class="user">
 					<a href="#" id="user">User</a>
@@ -456,15 +878,31 @@ $(document).ready(function() {
 				<span id="post" class="post">
 					<a class="btn_layerpopup" href="#layerPopup">Post</a>
 				</span> 
-				<span class="sample">
-					<a href="#" id="sample">sample</a>
-				</span> 
+			</div>
+			
+			<div class="top_hide_zone" id="topSearchBar">
+				성별 : 
+				<input type="radio" name="gender" value="male" checked>남
+				<input type="radio" name="gender" value="female">여
+				&nbsp;
+				
+				<select id="searchBy" name="searchBy">
+					<option value="style">Style</option>
+					<option value="hashtag">HashTag</option>
+					</select> 
+				<span id="searchFor">
+					<select name="style">
+						<option value="classic">Classic</option>
+						<option value="casual">Casual</option>
+						<option value="street">Street</option>
+						<option value="office">Office</option>
+					</select>
+				</span>
+				<button class="search-button">검색</button>
 			</div>
 		</div>
 		
-		
 		<div class="top_con_zone" id="fixNextTag"></div>
-		
 		
 		<div class="bottom_cp_zone" id="bottomBar">&copy; copyright 2017 by DevDig</div>
 		
@@ -480,7 +918,7 @@ $(document).ready(function() {
 				<div class="inner">
 					<div class="box">
 						<section id="wrapper">
-						<form action="UploadServlet" method="post" enctype="multipart/form-data">
+						<form action="UploadServlet" method="post" enctype="multipart/form-data" id="uploadForm">
 							<div id="carbonads-container">
 								<div class="carbonad">
 									<div id="azcarbon"></div>
@@ -500,7 +938,7 @@ $(document).ready(function() {
 							<article>
 							<p id="status">당신의 스타일을 공유하세요!</p>
 							<p>
-								<input type=file name="photo">
+								<input type=file name="photo" id="file">
 							</p>
 							<p>Style:
 								<select name="style">
@@ -514,7 +952,7 @@ $(document).ready(function() {
 							</article>
 							<script>
 								var upload = document
-										.getElementsByTagName('input')[0], holder = document
+										.getElementById('file'), holder = document
 										.getElementById('holder'), state = document
 										.getElementById('status');
 								if (typeof window.FileReader === 'undefined') {
@@ -540,7 +978,7 @@ $(document).ready(function() {
 									return false;
 								};
 							</script>
-							<textarea name="content" style="width: 550px; height: 90px;"></textarea>
+							<textarea name="content" style="width: 550px; height: 90px;" id="uploadArtice"></textarea>
 							<br> <input type="submit" value="글쓰기">
 						</form>
 						</section>

@@ -7,7 +7,8 @@ grant resource, connect to stylefollow;
 create table userInfo(
   userid varchar2(100) not null primary key,
   pwd varchar2(100) not null,
-  gender varchar2(50));
+  gender varchar2(50),
+  fbkey varchar2(20));
   
 create table userStyle(
   userid varchar2(100),
@@ -39,6 +40,13 @@ create table likes(
   userid varchar2(10) not null,
   constraint likse_idx_fk foreign key(idx) references post(idx) on delete cascade,
   constraint likes_userid_fk foreign key(userid) references userinfo(userid) on delete cascade);
+  
+create table hashtable(
+  hashtag varchar2(4000) not null,
+  idx number(4) not null,
+  cmntidx number(4),
+  constraint hashtable_idx_fk foreign key(idx) references post(idx) on delete cascade,
+  constraint hashtable_cmntidx_fk foreign key(cmntidx) references comments(cmntidx) on delete cascade);
   
 create sequence post_seq;
 create sequence comment_seq;

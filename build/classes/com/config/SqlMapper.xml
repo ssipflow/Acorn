@@ -48,6 +48,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by writeday desc
 	</select>
 	
+	<select id="recentPostIdx" parameterType="string" resultType="int">
+		select idx
+		from post
+		where userid=#{userid}
+		order by idx desc 
+	</select>
+	
 	<insert id="upload" parameterType="PostDTO">
 		insert into post(idx, userid, weather, style, photo, content, temp)
 		values(post_seq.nextval, #{userid}, #{weather}, #{style}, #{photo}, #{content}, #{temp})
@@ -89,6 +96,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where cmntIdx=#{cmntIdx}
 	</delete>
 	
+	<select id="selectPostIdxByCmnt" parameterType="int" resultType="int">
+		select postidx
+		from comments
+		where cmntidx=#{cmntIdx}
+	</select>
+	
 	<update id="modifyContent" parameterType="PostDTO">
 		update post
 		set style=#{style}, content=#{content}
@@ -122,5 +135,100 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into likes(idx, userid)
 		values(#{idx}, #{userid})
 	</insert>
+	
+	<insert id="insertHashTag" parameterType="HashTagDTO">
+		insert into hashtable(hashtag, idx)
+		values(#{hashtag}, #{idx})
+	</insert>
+	
+	<insert id="insertHashTagByCmnt" parameterType="HashTagDTO">
+		insert into hashtable(hashtag, idx, cmntidx)
+		values(#{hashtag}, #{idx}, #{cmntIdx})
+	</insert>
+	
+	<delete id="deleteHashTag" parameterType="int">
+		delete hashtable
+		where idx=#{idx}
+	</delete>
+	
+	<delete id="deleteHashTagByCmnt" parameterType="int">
+		delete hashtable
+		where cmntidx=#{cmntidx}
+	</delete>
+	
+	<select id="searchByHashTag" parameterType="string" resultType="PostDTO">
+		select distinct post.idx, post.userid, post.weather, post.style, post.photo, post.content, to_char(post.writeday, 'YYYYMMDDHH24MISS') writeday, post.temp
+		from post, hashtable
+		where post.idx = hashtable.idx and hashtable.hashtag=#{hashtag}
+		order by writeday desc
+	</select>
+	
+	<select id="searchByStyle" parameterType="string" resultType="PostDTO">
+		select idx, userid, weather, style, photo, content, to_char(writeday, 'YYYYMMDDHH24MISS') writeday, temp
+		from post
+		where style=#{style}
+		order by writeday desc
+	</select>
+	
+	<select id="searchByGenderHashTag" parameterType="hashmap" resultType="PostDTO">
+		select distinct post.idx, post.userid, post.weather, post.style, post.photo, post.content, to_char(post.writeday, 'YYYYMMDDHH24MISS') writeday, post.temp
+		from post, hashtable, userinfo
+		where post.idx = hashtable.idx and post.userid=userinfo.userid and userinfo.gender=#{gender} and hashtable.hashtag=#{searchFor}
+		order by writeday desc
+	</select>
+	
+	<select id="searchByGenderStyle" parameterType="hashmap" resultType="PostDTO">
+		select distinct post.idx, post.userid, post.weather, post.style, post.photo, post.content, to_char(post.writeday, 'YYYYMMDDHH24MISS') writeday, post.temp
+		from post, userinfo
+		where post.userid=userinfo.userid and userinfo.gender=#{gender} and post.style=#{searchFor}
+		order by writeday desc
+	</select>
+	
+	<select id="recommendPosting" parameterType="hashmap" resultType="hashmap">
+		select likes.idx, post.userid, post.weather, post.style, post.photo, post.content, to_char(post.writeday, 'YYYYMMDDHH24MISS') writeday, post.temp, count(likes.userid) likes 
+		from post, likes, userinfo
+		where post.idx = likes.idx and post.userid = userinfo.userid and userinfo.gender = #{gender} and post.weather=#{weather} and post.temp between #{temp}-2 and #{temp}+2 and post.style in(
+  			select style
+   			from userstyle
+   			where userid=#{userid})
+		group by likes.idx, post.userid, post.weather, post.style, post.photo, post.content, post.writeday, post.temp
+		order by writeday, likes desc
+	</select>
+	
+	<select id="searchByHashTagForUser" parameterType="hashmap" resultType="PostDTO">
+		select distinct post.idx, post.userid, post.weather, post.style, post.photo, post.content, to_char(post.writeday, 'YYYYMMDDHH24MISS') writeday, post.temp
+		from post, hashtable
+		where post.idx = hashtable.idx and post.userid=#{userid} and hashtable.hashtag=#{searchFor}
+		order by writeday desc
+	</select>
+	
+	<select id="searchByStyleForUser" parameterType="hashmap" resultType="PostDTO">
+		select idx, userid, weather, style, photo, content, to_char(writeday, 'YYYYMMDDHH24MISS') writeday, temp
+		from post
+		where style=#{searchFor} and userid=#{userid}
+		order by writeday desc
+	</select>
+	
+	<delete id="styleDelete" parameterType="string">
+		delete userstyle
+		where userid=#{userid}
+	</delete>
+
+	<select id="isFbRegistered" parameterType="string" resultType="int">
+		select count(fbkey)
+		from userinfo
+		where fbkey=#{fbKey}
+	</select>
+	
+	<insert id="fbMemberReg" parameterType="UserInfoDTO">
+		insert into userinfo(fbkey, userid, pwd, gender)
+		values(#{fbKey}, #{userid}, #{pwd}, #{gender})
+	</insert>
+	
+	<select id="fbLogin" parameterType="string" resultType="UserInfoDTO">
+		select userid, pwd, gender, fbkey
+		from userInfo
+		where fbkey=#{fbKey}
+	</select>
 
 </mapper>

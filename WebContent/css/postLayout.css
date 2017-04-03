@@ -4,12 +4,52 @@
 	margin-top: 25px;
 }
 
-.user-post-zone{
-	text-shadow: 0 0 9px black;
+#layerSearch {
+	border: 1px solid #ededed;
+	position: relative;
+	margin: 0 auto;
+	left: 10px;
+	right: 10px;
+	width: 650px;
+	display: block;
+	border-radius: 5px;
+	text-align: left;
+	background-color: #fff;
+	font-size: 20px;
 }
 
+#layerSearch .search-input{
+	width: 550px;
+	line-height: 50px;
+	margin-top: 20px;
+	margin-left: 50px;
+	margin-right: 50px;
+	font-size: 30px;
+	text-align: left;
+	color: black;
+	border-radius: 5px 5px 0 0;
+}
+
+#layerSearch .search-for{
+	width: 550px;
+	margin-top: 10px;
+	margin-left: 50px;
+	margin-right: 50px;
+	margin-bottom: 20px;
+	line-height: 30px;
+	font-size: 18px;
+	text-align: left;
+	color: black;
+	border-radius: 5px 5px 0 0;
+}
+
+#layerSearch .search .search-by{
+	cursor: pointer;
+}
+
+
 #layerUser {
-	border: 1px solid black;
+	border: 1px solid #ededed;
 	position: relative;
 	margin: 0 auto;
 	left: 10px;
@@ -34,7 +74,63 @@
 	border-radius: 5px 5px 0 0;
 }
 
-#layerUser .user-menu .button-member{
+#layerUser .member-modify{
+	width: 550px;
+	margin-top: 10px;
+	margin-left: 50px;
+	margin-right: 50px;
+	font-size: 15px;
+	color: black;
+	border-radius: 5px 5px 0 0;
+	display: none;
+}
+
+#layerUser .member-modify .button-member-modify-ok{
+	border-radius: 8px;
+	border: 0;
+	margin-left: 6px;
+	padding: 0;
+	width: 35px; 
+	height: 25px;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+#layerUser .member-modify .button-member-modify-cancel{
+	border-radius: 8px;
+	border: 0;
+	margin-left: auto;
+	padding: 0;
+	width: 35px; 
+	height: 25px;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+#layerUser .member-exit{
+	width: 550px;
+	margin-top: 10px;
+	margin-left: 50px;
+	margin-right: 50px;
+	font-size: 20px;
+	color: black;
+	border-radius: 5px 5px 0 0;
+}
+
+#layerUser .user-menu .button-member-modify{
+	border-radius: 10px;
+	border: 0;
+	margin-top: 10px;
+	margin-right: 5px;
+	padding: 0;
+	width: auto; 
+	height: 30px;
+	float: right;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+#layerUser .user-menu .button-member-exit{
 	border-radius: 10px;
 	border: 0;
 	margin-top: 10px;
@@ -91,8 +187,7 @@
 	width: 650px;
 	height: 100%;
 	display: block;
-	background-color: grey;
-	border: 1px solid black;
+	border: 1px solid #ededed;
 	border-radius: 5px;
 	font-size: 40px;
 }
@@ -229,14 +324,23 @@
 }
 
 #layerPost .layer-post-containers .box-post .content p{
-	margin: 0px;
+	margin: 10px 0 0 0;
 	padding: 0px;
 	font-size: 18px;
 }
 
-#layerPost .layer-post-containers .box-post .content .style{
+#layerPost .layer-post-containers .box-post .content .category{
 	text-align: right;
 	font-size: 20px;
+}
+
+#layerPost .layer-post-containers .box-post .content .category .style{
+	cursor: pointer;
+}
+
+#layerPost .layer-post-containers .box-post .content .hashtag{
+	color: blue;
+	cursor: pointer;
 }
 
 #layerPost .layer-post-containers .box-post .postmenu{
@@ -334,6 +438,11 @@
 	cursor: pointer
 }
 
+#layerPost .layer-post-containers .box-post .box-comment .comments .list-comment .comment .hashtag{
+	color: blue;
+	cursor: pointer;
+}
+
 #layerPost .layer-post-containers .box-post .box-comment .comments .list-comment .commentdelete{
 	float: right;
 	margin-right: 5px;
@@ -396,7 +505,7 @@
 }
 
 #layerPost .layer-post-containers .box-post .box-form .textarea-comment{
-	border: 0.1px solid black;
+	border: 0.1px solid #ededed;
 	margin: 0;
 	padding: 0;
 	width: 550px;

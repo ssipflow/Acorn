@@ -2,6 +2,7 @@ package com.controller;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.entity.CommentsDTO;
+import com.entity.HashTagDTO;
 import com.service.Service;
+import com.util.ExportHashTag;
 
 /**
  * Servlet implementation class ModifyCommentServlet
@@ -43,6 +46,17 @@ public class ModifyCommentServlet extends HttpServlet {
 		commentsDTO.setCommented(modifiedComment);
 		
 		Service service = new Service();
+		service.deleteHashTagByCmnt(Integer.parseInt(cmntIdx));
+		
+		int idx = service.selectPostIdxByCmnt(Integer.parseInt(cmntIdx));
+		List<String> hashTagList = ExportHashTag.exportHashTag(modifiedComment);
+		if(hashTagList.size() > 0){
+			for(String tag: hashTagList){
+				System.out.println("hashtag: " + tag);
+				HashTagDTO dto = new HashTagDTO(tag, idx, Integer.parseInt(cmntIdx));
+				service.insertHashTagByCmnt(dto);
+			}
+		}
 		service.modifyComment(commentsDTO);
 		commentsDTO = service.selectModifiedComment(Integer.parseInt(cmntIdx));
 		System.out.println("modified info: " + commentsDTO.toString() + "\n");

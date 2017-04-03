@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
      <typeAlias type="com.entity.UserStyleDTO" alias="UserStyleDTO"/>
      <typeAlias type="com.entity.PostDTO" alias="PostDTO"/>
      <typeAlias type="com.entity.CommentsDTO" alias="CommentsDTO"/>
+     <typeAlias type="com.entity.HashTagDTO" alias="HashTagDTO"/>
     </typeAliases>
     
 	<environments default="development">

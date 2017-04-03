@@ -1,3 +1,5 @@
+<%@page import="com.util.ExportHashTag"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.entity.CommentsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,6 +12,14 @@
 	int cmntidx = commentsDTO.getCmntIdx();
 	String userid = commentsDTO.getUserId();
 	String commented = commentsDTO.getCommented();
+	
+	ArrayList<String> commentTags = ExportHashTag.exportHashTag(commented);
+	for(String tag: commentTags){
+		String originTag = tag;
+		tag = "<span class='hashtag' id='"+tag+"'>"+tag+"</span>";
+		System.out.println("origin comment Tag: " + originTag + ", comment tag: " + tag);
+		commented = commented.replace(originTag, tag);
+	}
 %>
 <html>
 <head>
