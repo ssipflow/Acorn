@@ -467,9 +467,6 @@ $(document).ready(function() {
 				type: "get",
 				dataType: "html",
 				success:function(html){
-					/* cmntidx = data.cmntidx;
-					userid = data.userid;
-					commented = data.commented; */
 					
 					var recievedHTML = $.parseHTML(html);
 					console.log(recievedHTML);
@@ -528,9 +525,6 @@ $(document).ready(function() {
 				type: "get",
 				dataType: "html",
 				success:function(html){
-					/* cmntidx = data.cmntidx;
-					userid = data.userid;
-					commented = data.commented; */
 					
 					var recievedHTML = $.parseHTML(html);
 					parentNode.html(recievedHTML);
@@ -574,9 +568,6 @@ $(document).ready(function() {
 				type: "post",
 				dataType: "json",
 				success:function(html){
-					/* cmntidx = data.cmntidx;
-					userid = data.userid;
-					commented = data.commented; */
 				}
 			})
 			$(this).parent().hide();
