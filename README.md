@@ -10,7 +10,7 @@ StyleFollow
 - RAM: 8.00GB
 - IDE: Eclipse
 - DBMS: Oracle
-- 사용언어: JSP, JAVA, Servlet, JSP, jQuery, CSS
+- 사용언어: JSP, JAVA, Servlet, jQuery, CSS
 - 개발기간: 2017.03.10 ~ 2017.04.04
 
 3.28 02:28
