@@ -1,9 +1,6 @@
 package com.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,14 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import com.entity.UserInfoDTO;
 import com.service.Service;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class MemberDeragServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/MemberDeragServlet")
+public class MemberDeragServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -26,33 +25,24 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		String fbKey = request.getParameter("fbKey");
-		String userid = request.getParameter("userid");
-		String pwd = request.getParameter("pwd");
-		System.out.println("FB Key: " + fbKey);
-		System.out.println("Login id: " + userid);
-		System.out.println();
+		HttpSession session = request.getSession();
+		UserInfoDTO userInfo = (UserInfoDTO) session.getAttribute("UserInfo");
+		String loginUserId = userInfo.getUserid();
+		String loginUserPwd = userInfo.getPwd();
+		String inputPwd = request.getParameter("inputPwd");
+		
+		JSONObject json = new JSONObject();
+		String result = "fail";
 		
 		Service service = new Service();
-		UserInfoDTO userInfoDto = null;
-		if(fbKey == null){
-			HashMap<String, String> map = new HashMap<>();
-			map.put("userid", userid);
-			map.put("pwd", pwd);
-			
-			userInfoDto = service.login(map);
-		}else{
-			userInfoDto = service.fbLogin(fbKey);
+		if(loginUserPwd.equals(inputPwd)){
+			service.memberDerag(loginUserId);
+			result = "success";
 		}
+		json.put("result", result);
 		
-		if(userInfoDto == null){
-			System.out.println("login fail\n");
-			response.sendRedirect("error/loginError.jsp");
-		}else{
-			HttpSession session = request.getSession();
-			session.setAttribute("UserInfo", userInfoDto);
-			response.sendRedirect("main.jsp");
-		}
+		response.setContentType("application/x-json; charset=utf-8");
+		response.getWriter().print(json);
 	}
 
 	/**

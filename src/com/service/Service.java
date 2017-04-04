@@ -811,4 +811,19 @@ public class Service {
 		}
 		return userInfo;
 	}
+	
+	//회원탈퇴
+	public void memberDerag(String userid){
+		SqlSession session = MySqlSessionFactory.openSession();
+		
+		try{
+			session.delete(namespace+"memberDerag", userid);
+			session.commit();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+	}
 }

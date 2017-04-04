@@ -86,7 +86,7 @@
 					type: "get",
 					dataType: "json",
 					success:function(data){					
-						
+
 						isFbRegistered = data.isFbRegistered;
 						if(isFbRegistered == "false"){
 							window.location.assign("/StyleFollow/reg/memberReg.jsp?fbKey="+response.id);

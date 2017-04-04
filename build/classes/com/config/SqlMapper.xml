@@ -230,5 +230,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from userInfo
 		where fbkey=#{fbKey}
 	</select>
+	
+	<delete id="memberDerag" parameterType="string">
+		delete userinfo
+		where userid=#{userid}
+	</delete>
 
 </mapper>

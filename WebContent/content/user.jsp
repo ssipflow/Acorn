@@ -61,9 +61,10 @@
 			</div>
 			<% } %>
 			<% if(loginUserId.equals(userid)){ %>
-			<div class="member-exit">
-				<input type="pwd"><br>
-				<input type="pwd">  
+			<div class="member-derag">
+				<input type="password" placeholder="Password" class="derag-pwd">
+				<button class="button-user-derag">탈퇴</button>
+				<button class="button-userderag-cancel">취소</button>  
 			</div>
 			<% } %>
 			<div class="user-info" id="<%= userid %>">
