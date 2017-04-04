@@ -4,6 +4,15 @@ StyleFollow
 - 사용자가 코디정보를 올릴 때 서버에 저장된 날씨정보와 함께 저장
 - 사용자가 팔로우 중인 스타일을 현재 날씨, 온도, 추천수 기준으로 추천해주는 유저 기반 플랫폼
 
+개발환경
+- OS: Windows 10 Pro 64bit
+- CPU: Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz 2.30GHz
+- RAM: 8.00GB
+- IDE: Eclipse
+- DBMS: Oracle
+- 사용언어: JSP, JAVA, Servlet, JSP, jQuery, CSS
+- 개발기간: 2017.03.10 ~ 2017.04.04
+
 3.28 02:28
  - Context 변경(/LayOut -> /StyleFollow) : 기존 프로젝트 삭제 후 다시 fork할것.
  
